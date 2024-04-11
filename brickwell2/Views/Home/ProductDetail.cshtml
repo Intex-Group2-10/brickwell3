@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Http.Extensions
 @{
     ViewData["Title"] = "Product Detail";
 
@@ -7,106 +8,106 @@
     <div class="backto">
         <a asp-controller="Home" asp-action="Products">
             <img class="arrow" src="~/images/back.png" alt="back arrow">
-            <h1 class="continue-shop">Continue Shopping</h1>
         </a>
+        <a asp-controller="Home" asp-action="Products" style="text-decoration: none;"><h1 class="continue-shop">Continue Shopping</h1></a>
         </div>
 </div>
+
 <div class="prod-detail">
     <div>
-        <img src="@Model.Product.ImgLink" alt="lego peacock" style="width: 80%; display: block; margin: auto">
+        <img src="@Model.Product.ImgLink" alt="@Model.Product.Name" style="width: 80%; display: block; margin: auto">
     </div>
     <div style="margin-left: 20px; max-width: 650px">
-        <br><h1>@Model.Product.Name</h1>
-        <h5>@Model.Product.Year</h5>
-        <h3>$@Model.Product.Price.00</h3>
+        <h2 style="margin: 1.5rem 0;">@Model.Product.Name</h2>
+        <h4>$@Model.Product.Price.00</h4>
+        <hr class="title-underline">
+        <p style="margin-top: 1rem; margin-bottom: 0"><b>Color:</b> @Model.Product.PrimaryColor</p>
+        <p style="margin-bottom: 0"><b>Number of parts:</b> @Model.Product.NumParts</p>
+        <p style="margin-bottom: 0"><b>Category:</b> @Model.Product.Category</p>
+        <form method="post" asp-page="/Cart" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+            <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+            <button type="submit" class="add-to-cart">Add to Cart</button>
+        </form>
+        
         <div class="border p-3 mb-3">
           <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">View Product Description</a></h3>
-
           <div class="collapse" id="collapsebank">
         	<div class="py-2">
                 <p class="mb-0">@Model.Product.Description</p>
+                <p><i>@Model.Product.Category</i></p>
         	</div>
           </div>
         </div>
-        @* <p>@Model.Description</p> *@
-        @* <div class="add-to-cart"> *@
-           <form id=@Model.Product.ProductId method="post" asp-page="/Cart"> 
-               <input type="hidden" asp-for="Product.ProductId" />
-               <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-               <button class="add-to-cart" type="submit">Add to Cart</button>
-           </form> 
-        @* </div> *@
-        
     </div>
 </div>
 
 <h3 style="margin-left: 80px">Shop similar products</h3>
 <div class="item-recommend" style="margin: 50px">
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation1.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation1.ProductId">
             <img src="@ViewBag.Recommendation1.ImgLink" alt="Item 1" style="width: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation1.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation1.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation2.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation2.ProductId">
             <img src="@ViewBag.Recommendation2.ImgLink" alt="Item 2" style="width: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation2.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation2.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation3.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation3.ProductId">
             <img src="@ViewBag.Recommendation3.ImgLink" alt="Item 3" style="width: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation3.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation3.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation4.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation4.ProductId">
             <img src="@ViewBag.Recommendation4.ImgLink" alt="Item 4" style="width: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation4.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation4.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation5.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation5.ProductId">
             <img src="@ViewBag.Recommendation5.ImgLink" alt="Item 5" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation5.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation5.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation6.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation6.ProductId">
             <img src="@ViewBag.Recommendation6.ImgLink" alt="Item 6" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation6.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation6.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation7.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation7.ProductId">
             <img src="@ViewBag.Recommendation7.ImgLink" alt="Item 7" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation7.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation7.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation8.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation8.ProductId">
             <img src="@ViewBag.Recommendation8.ImgLink" alt="Item 8" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation8.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation8.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation9.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation9.ProductId">
             <img src="@ViewBag.Recommendation9.ImgLink" alt="Item 9" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation9.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation9.Price.00</h5>
         </a>
     </div>
     <div class="item">
-        <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation10.ProductId">
+        <a class="product-item" style="text-decoration: none" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation10.ProductId">
             <img src="@ViewBag.Recommendation10.ImgLink" alt="Item 10" style="height: 250px; object-fit: cover;">
             <h3 style="text-align: center">@ViewBag.Recommendation10.Name</h3>
             <h5 style="font-weight: normal">$@ViewBag.Recommendation10.Price.00</h5>

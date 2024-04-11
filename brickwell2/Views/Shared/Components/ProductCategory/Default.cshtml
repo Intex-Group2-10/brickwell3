@@ -1,11 +1,39 @@
 ﻿
 @model IEnumerable<string>
 
-<div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">All Products</a>
+@* <div class="d-grid gap-2"> *@
+@*     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">All Products</a> *@
+@* *@
+@*     @foreach(string prod in Model ?? Enumerable.Empty<string>()) *@
+@*     { *@
+@*         <a class=" btn @(prod == ViewBag.SelectProductCategory ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productCategory="@prod" asp-route-pageNum="1">@prod</a> *@
+@*     } *@
+@* </div> *@
 
-    @foreach(string prod in Model ?? Enumerable.Empty<string>())
+<div class="d-grid gap-2">
+    
+    <label>
+        <input type="checkbox" class="category-checkbox" data-category=""/>
+        All Products
+    </label>
+
+    @foreach (string prod in Model ?? Enumerable.Empty<string>())
     {
-        <a class=" btn @(prod == ViewBag.SelectProductCategory ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productCategory="@prod" asp-route-pageNum="1">@prod</a>
+        <label>
+            <input type="checkbox" class="category-checkbox" data-category="@prod" @(prod == ViewBag.SelectProductCategory ? "checked" : "")/>@prod
+        </label>
     }
 </div>
+
+<script>
+    document.querySelectorAll('.category-checkbox').forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            var selectedCategories = [];
+            document.querySelectorAll('.category-checkbox:checked').forEach(function (checked) {
+                selectedCategories.push(checked.getAttribute('data-category'));
+            });
+            var categoryParam = selectedCategories.join(',');
+            window.location.href = '@Url.Action("Products", "Home")?productCategory=' + categoryParam + '&pageNum=1';
+        });
+    });
+</script>
