@@ -121,7 +121,6 @@ public class AdminController : Controller
     {
         var recordToEdit = _securityRepo.AspNetUsers
             .Single(x => x.Id == id);
-        // ViewBag.users = _repo.Users.ToList();
         return View(recordToEdit);
     }
     
@@ -129,7 +128,6 @@ public class AdminController : Controller
     public IActionResult EditUser(Models.AspNetUser user)
     {
         _securityRepo.EditUser(user);
-        // _securityRepo.SaveChanges();
             return RedirectToAction("AdminUsers");
     }
     
@@ -143,8 +141,9 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteUser (Models.AspNetUser deleteInfo)
+    public IActionResult DeleteUser (AspNetUser user)
     {
+        // _securityRepo.AspNetUsers.Remove(user);
         return RedirectToAction("AdminUsers");
     }
 }
