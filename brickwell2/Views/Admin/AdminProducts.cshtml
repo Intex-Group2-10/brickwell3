@@ -1,9 +1,9 @@
 @{
-    Layout = "_AdminLayout.cshtml";
+    Layout = "_AdminLayout";
 }
 <div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
     <h1 style="font-size: 60px;">Products</h1>
-    </div>
+</div>
 
 <table class="table table-bordered">
 
@@ -19,7 +19,7 @@
         <td>Secondary Color</td>
         <td>Description</td>
         <td>Category</td>
-        <td><a class="btn btn-danger" asp-controller="Admin" asp-action="">Add User</a></td>
+        <td><a class="btn btn-danger" asp-controller="Admin" asp-action="AddProduct">Add Product</a></td>
     </tr>
         
     </thead>
@@ -28,18 +28,18 @@
     {
         <tbody>
         <tr>
-            <td>@x.product_ID</td>
-            <td>@x.name</td>
-            <td>@x.year</td>
-            <td>@x.num_parts</td>
-            <td>@x.price</td>
-            <td>@x.img_link</td>
-            <td>@x.primary_color</td>
-            <td>@x.secondary_color</td>
-            <td>@x.description</td>
-            <td>@x.category</td>
-            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@x.UserId">Edit</a></td>
-            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@x.UserId">Delete</a></td>
+            <td>@x.ProductId</td>
+            <td>@x.Name</td>
+            <td>@x.Year</td>
+            <td>@x.NumParts</td>
+            <td>@x.Price</td>
+            <td>@x.ImgLink</td>
+            <td>@x.PrimaryColor</td>
+            <td>@x.SecondaryColor</td>
+            <td>@x.Description</td>
+            <td>@x.Category</td>
+            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditProduct" asp-route-id="@x.ProductId">Edit</a></td>
+            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteProduct" asp-route-id="@x.ProductId">Delete</a></td>
         </tr>
         </tbody>
     }

@@ -1,0 +1,88 @@
+@model brickwell2.Models.AspNetUser
+@{
+  Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add User Form</title>
+<style>
+  body {
+    font-family: 'League Spartan', sans-serif, sans-serif;
+    background-color: #FFF6C9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .form-container {
+    background: #ffffd4;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field input[type=text],
+  .form-field input[type=date],
+  .form-field input[type=email],
+  .form-field select {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .form-field input[type=checkbox] {
+    margin-top: 6px;
+  }
+  .btn {
+    width: 100%;
+    background-color: #f1c40f;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #dab10e;
+  }
+  .btn.cancel {
+    background-color: #e74c3c;
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Add User</h2>
+  <p>Please fill in the following boxes:</p>
+  <form method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-field">
+      <label asp-for="UserName">Username</label>
+      <input asp-for="UserName" type="text" id="UserName" name="UserName" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="Email">Email</label>
+      <input asp-for="Email" type="text" id="Email" name="Email" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="PhoneNumber">Phone Number</label>
+      <input asp-for="PhoneNumber" type="text" id="PhoneNumber" name="PhoneNumber" required>
+    </div>
+    <div class="form-field">
+      <input type="button" value="Cancel" class="btn cancel" onclick="window.history.back();">
+      <button type="submit" value="Add User" class="btn">Submit changes</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,4 @@
-﻿
-namespace brickwell2.Models
+﻿namespace brickwell2.Models
 {
     public class EFLegoSecurityRepository : ILegoSecurityRepository
     {
@@ -12,5 +11,20 @@ namespace brickwell2.Models
         }
 
         public IQueryable<AspNetUser> AspNetUsers => _context.AspNetUsers;
+        public void EditUser(AspNetUser user)
+        {
+            _context.Update(user);
+            _context.SaveChanges();
+        }
+        public void AddUser(AspNetUser user)
+        {
+            _context.Add(user);
+            _context.SaveChanges();
+        }
+        public void DeleteUser(AspNetUser user)
+        {
+            _context.Remove(user);
+            _context.SaveChanges();
+        }
     }
 }

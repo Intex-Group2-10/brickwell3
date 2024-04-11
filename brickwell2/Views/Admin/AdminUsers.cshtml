@@ -1,4 +1,4 @@
-@model PaginationListViewModel
+@* @model Product *@
 @{
     Layout = "_AdminLayout";
 }
@@ -13,10 +13,9 @@
     <thead class="fw-bold">
     <tr>
         <td>User ID</td>
-        <td>Password</td>
+        <td>Username</td>
         <td>Email</td>
-        <td>Two Factor Authentication</td>
-        <td>Admin</td>
+        <td>PhoneNumber</td>
         <td><a class="btn btn-danger" asp-controller="Admin" asp-action="">Add User</a></td>
     </tr>
         
@@ -29,10 +28,9 @@
             <td>@x.Id</td>
             <td>@x.UserName</td>
             <td>@x.Email</td>
-            <td>@x.PasswordHash</td>
             <td>@x.PhoneNumber</td>
-            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditCustomer" asp-route-id="@x.Id">Edit</a></td>
-            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteCustomer" asp-route-id="@x.Id">Delete</a></td>
+            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditUser" asp-route-id="@x.Id">Edit</a></td>
+            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@x.Id">Delete</a></td>
         </tr>
         </tbody>
     }

@@ -1,0 +1,14 @@
+@{
+    Layout = "_AdminLayout";
+}
+@model AspNetUser
+
+<h2>Confirm Deletion</h2>
+<h3>@Model.UserName, @Model.Email</h3>
+<form asp-controller="Admin" asp-action="DeleteUser" method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <button type="submit">Delete</button>
+    <a class="btn btn-info" asp-controller="Admin" asp-action="AdminUsers">Cancel</a>
+</form>

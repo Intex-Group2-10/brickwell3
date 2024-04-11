@@ -1,0 +1,113 @@
+@model brickwell2.Models.Product
+@{
+  Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Product Form</title>
+<style>
+  body {
+    font-family: 'League Spartan', sans-serif, sans-serif;
+    background-color: #FFF6C9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .form-container {
+    background: #ffffd4;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field input[type=text],
+  .form-field input[type=date],
+  .form-field input[type=email],
+  .form-field select {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0 12px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .form-field input[type=checkbox] {
+    margin-top: 6px;
+  }
+  .btn {
+    width: 100%;
+    background-color: #f1c40f;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #dab10e;
+  }
+  .btn.cancel {
+    background-color: #e74c3c;
+  }
+</style>
+</head>
+<body>
+<div class="form-container">
+  <h2>Add Product</h2>
+  <p>Please fill in the following boxes:</p>
+  <form method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <div class="form-field">
+      <label asp-for="Name">Name</label>
+      <input asp-for="Name" type="text" id="Name" name="Name" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="Year">Year</label>
+      <input asp-for="Year" type="number" id="Year" name="Year" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="NumParts">Number of Parts</label>
+      <input asp-for="NumParts" type="number" id="NumParts" name="NumParts" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="Price">Price</label>
+      <input asp-for="Price" type="number" id="Price" name="Price" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="ImgLink">Image Link</label>
+      <input asp-for="ImgLink" type="text" id="ImgLink" name="ImgLink" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="PrimaryColor">Primary Color</label>
+      <input asp-for="PrimaryColor" type="text" id="PrimaryColor" name="PrimaryColor" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="SecondaryColor">Secondary Color</label>
+      <input asp-for="SecondaryColor" type="text" id="SecondaryColor" name="SecondaryColor" required>
+    </div>
+    <div class="form-field">
+      <label asp-for="Description">Description</label>
+      <input asp-for="Description" type="text" id="Description" name="Description" required>
+    </div>
+   <div class="form-field">
+      <label asp-for="Category">Category</label>
+      <input asp-for="Category" type="text" id="Category" name="Category" required>
+    </div>
+    
+    <div class="form-field">
+      <input type="button" value="Cancel" class="btn cancel" onclick="window.history.back();">
+      <button type="submit" value="Add Product" class="btn">Submit changes</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

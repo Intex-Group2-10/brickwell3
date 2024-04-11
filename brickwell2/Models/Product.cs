@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace brickwell2.Models;
 
 public partial class Product
 {
-    public int? ProductId { get; set; }
+    [Key]
+    public int ProductId { get; set; }
 
     public string? Name { get; set; }
 
