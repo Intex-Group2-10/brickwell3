@@ -162,7 +162,6 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteProduct(Product deleteInfo)
     public IActionResult DeleteProduct(Product delete)
     {
         _repo.DeleteProduct(delete);

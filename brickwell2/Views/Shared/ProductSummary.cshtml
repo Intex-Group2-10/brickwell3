@@ -2,20 +2,7 @@
 
 @model Product
 
-@* <div class="card m-1 p-1"> *@
-@*     <img src="@Model.ImgLink" alt="@Model.Name" style="width: 200px; height: auto;" /> <!-- Adjust the width as needed --> *@
-@*     <h3>@Html.Raw(Model.Name.Replace("LEGO¬Æ", "LEGO&reg;").Replace("‚Ñ¢", "&trade;"))</h3> *@
-@*     <h6>$@Model.Price</h6> *@
-@* *@
-@*     <form id=@Model.ProductId method="post" asp-page="/Cart"> *@
-@*         <input type="hidden" asp-for="ProductId" /> *@
-@*         <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" /> *@
-@*         <button type="submit" class="btn-outline-success btn-sm float-end">Add to Cart</button> *@
-@*     </form> *@
-@* *@
-@* </div> *@
-
-<div class="col-12 col-md-4 col-lg-3 mb-5">
+<div class="col-12 col-md-4 col-lg-4 mb-5">
     <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@Model.ProductId">
         <input type="hidden" asp-for="@Model.ProductId">
         <img src="@Model.ImgLink" alt="@Model.Name" class="img-fluid product-thumbnail">
@@ -25,23 +12,10 @@
             <form id=@Model.ProductId method="post" asp-page="/Cart">
                 <input type="hidden" asp-for="ProductId"/>
                 <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
-                <button type="submit">
+                <button type="submit" style="background-color: transparent; border: none;">
                     <img src="~/images/cross.svg" alt="plus" class="img-fluid">
                 </button>
             </form>
         </span>
     </a>
 </div>
-
-@* <div class="col-12 col-md-4 col-lg-3 mb-5"> *@
-@* 	<a class="product-item" href="#"> *@
-@* 		<img src="~/images/product-3.png" class="img-fluid product-thumbnail"> *@
-@* 		<h3 class="product-title">Ergonomic Chair</h3> *@
-@* 		<strong class="product-price">$43.00</strong> *@
-@* *@
-@* 		<span class="icon-cross"> *@
-@* 			<img src="~/images/cross.svg" class="img-fluid"> *@
-@* 		</span> *@
-@* 	</a> *@
-@* 	</div> *@
-
