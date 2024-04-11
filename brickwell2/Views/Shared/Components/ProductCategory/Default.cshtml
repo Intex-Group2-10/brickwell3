@@ -2,7 +2,7 @@
 @model IEnumerable<string>
 
 <div class="d-grid gap-2">
-    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">Homecuh</a>
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">All Products</a>
 
     @foreach(string prod in Model ?? Enumerable.Empty<string>())
     {
