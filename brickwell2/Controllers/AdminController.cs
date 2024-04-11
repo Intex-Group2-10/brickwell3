@@ -162,7 +162,6 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteProduct(Product deleteInfo)
     public IActionResult DeleteProduct(Product delete)
     {
         _repo.DeleteProduct(delete);
@@ -196,22 +195,30 @@ public class AdminController : Controller
     public IActionResult AdminUsers(int pageNum)
     {
         int pageSize = 10;
+
+        // Ensure pageNum is at least 1
+        pageNum = Math.Max(pageNum, 1);
+
+        var userQuery = _securityRepo.AspNetUsers
+                          .OrderBy(x => x.UserName);
+
         var user = new PaginationListViewModel
         {
-            AspNetUsers = _securityRepo.AspNetUsers
-                .OrderBy(x => x.UserName)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize),
+            AspNetUsers = userQuery
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize), // No ToList() since we want an IQueryable
 
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = pageNum,
-                ProductsPerPage = pageSize,
-                TotalProducts = _securityRepo.AspNetUsers.Count()
+                ProductsPerPage = pageSize, // Renamed to ItemsPerPage for clarity
+                TotalProducts = userQuery.Count() // Use the count of userQuery
             }
         };
+
         return View(user);
     }
+
     //}
 
     [HttpGet]
