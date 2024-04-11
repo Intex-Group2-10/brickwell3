@@ -65,5 +65,9 @@ namespace brickwell2.Models
 			_context.Products.Remove(product);
 			_context.SaveChanges();
 		}
+		public void SaveChanges()
+		{
+			_context.SaveChanges();
+		}
 	}
 }

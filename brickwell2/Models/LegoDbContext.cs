@@ -35,7 +35,7 @@ public partial class LegoDbContext : DbContext
     {
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasNoKey();
+            // entity.HasNoKey();
 
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.CountryOfResidence).HasColumnName("country_of_residence");
@@ -95,7 +95,7 @@ public partial class LegoDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasNoKey();
+            // entity.HasNoKey();
 
             entity.Property(e => e.Category).HasColumnName("category");
             entity.Property(e => e.Description).HasColumnName("description");

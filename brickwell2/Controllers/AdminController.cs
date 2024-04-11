@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using brickwell2.Models;
 using System;
 using System.Diagnostics;
+using System.Xml.Linq;
 using brickwell2.Models.ViewModels;
 using SQLitePCL;
 
@@ -86,9 +87,11 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteProduct (Models.Product deleteInfo)
+    public IActionResult DeleteProduct (Product deleteInfo)
     {
         _repo.DeleteProduct(deleteInfo);
+        // _repo.Products.Remove(product);
+        // _repo.SaveChanges();
 
         return RedirectToAction("AdminUsers");
     }
