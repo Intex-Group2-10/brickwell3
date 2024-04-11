@@ -18,8 +18,7 @@
 			<div class="row">
 				@foreach (Product prod in Model.Products)
 				{
-					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@prod.ProductId"><partial name="ProductSummary" model="prod" /></a>
-					<input type="hidden" asp-for="@prod.ProductId" />
+					<partial name="ProductSummary" model="prod" />
 				}
 			</div>
 		</div>
