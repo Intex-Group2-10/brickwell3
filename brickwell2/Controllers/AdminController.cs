@@ -140,7 +140,7 @@ public class AdminController : Controller
     [HttpPost]
     public IActionResult DeleteUser (AspNetUser user)
     {
-        // _securityRepo.AspNetUsers.Remove(user);
+        _securityRepo.DeleteUser(user);
         return RedirectToAction("AdminUsers");
     }
 }
