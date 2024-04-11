@@ -16,7 +16,8 @@
         <td>Username</td>
         <td>Email</td>
         <td>PhoneNumber</td>
-        <td><a class="btn btn-danger" asp-controller="Admin" asp-action="RegisterUserModel">Add User</a></td>
+        <td><a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Add User</a></td>
+            @* <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a> *@
     </tr>
         
     </thead>
