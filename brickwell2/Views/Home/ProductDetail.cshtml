@@ -1,31 +1,7 @@
 @{
     ViewData["Title"] = "Product Detail";
 }
-<style>
-    .item-recommend {
-        display: flex;
-        overflow-x: auto; /* Enable horizontal scrolling */
-        white-space: nowrap; /* Keep items in a single line */
-    }
-
-    .item {
-        flex: 0 0 auto; /* Prevent items from wrapping */
-        padding: 10px;
-        margin-right: 40px; /* Add space between items */
-        text-align: center;
-    }
-    
-    .add-to-cart {
-        background-color: #FEC107;
-        color: #000;
-        font-size: 24px;
-        height: 50px;
-        width: 400px;
-        line-height: 50px;
-        text-align: center;
-        margin: 35px auto auto;
-    }
-</style>
+@model Product
 <div class="container1">
     <div class="backto">
         <a asp-controller="Home" asp-action="Products">
@@ -36,28 +12,30 @@
 </div>
 <div class="prod-detail">
     <div>
-        <img src="~/images/27_peacock.webp" alt="lego peacock" style="width: 80%; display: block; margin: auto">
+        <img src="@Model.ImgLink" alt="lego peacock" style="width: 80%; display: block; margin: auto">
     </div>
     <div style="margin-left: 20px; max-width: 650px">
-        <br><h1>Exotic Peacock</h1>
-        <h3>$20.00</h3>
-        <p>Boys and girls aged 7+ can build, play with and display 3 different exotic LEGO animal toys with this impressive Creator Exotic 
-            Peacock (31157) 3in1 building set. It features a peacock toy with a set of beautiful and detailed tail feathers that can be 
-            folded down or proudly spread out. 
-            <br><br>
-            This LEGO Creator 3in1 set gives kids 3 different build-and-play experiences with 
-            the same set of bricks. They can build a peacock figurine toy, rebuild it into a dragonfly toy with wings and tail on a lily-pad 
-            stand, or a colorful butterfly toy with wings. All 3 playable models make for attractive display items on a shelf or bedside table.
-            <br><br>
-            LEGO Creator 3in1 toys make great gifts for kids, with 3 different models to create in every box. Kids will be excited to build, 
-            rebuild and build again. 3in1 sets keep them happy for countless hours and offer a range of models that appeal to their biggest 
-            passions, including super fast vehicles, amazing animals and detailed city scenes.
-            <br><br>
-            3 LEGO animal toys including a peacock toy in 1 box. Boys and girls aged 7+ can build and rebuild 3 different models using the 
-            same bricks with this LEGO Creator Exotic Peacock 3in1 set.</p>
-        <div class="add-to-cart">
-            <p>Add to Bag</p>
+        <br><h1>@Model.Name</h1>
+        <h5>@Model.Year</h5>
+        <h3>$@Model.Price.00</h3>
+        <div class="border p-3 mb-3">
+          <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">View Product Description</a></h3>
+
+          <div class="collapse" id="collapsebank">
+        	<div class="py-2">
+                <p class="mb-0">@Model.Description</p>
+        	</div>
+          </div>
         </div>
+        @* <p>@Model.Description</p> *@
+        @* <div class="add-to-cart"> *@
+           <form id=@Model.ProductId method="post" asp-page="/Cart"> 
+               <input type="hidden" asp-for="ProductId" />
+               <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+               <button class="add-to-cart" type="submit">Add to Cart</button>
+           </form> 
+        @* </div> *@
+        
     </div>
 </div>
 

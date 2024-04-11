@@ -33,6 +33,5 @@ public class FraudPrediction
     public int bank_Monzo {get; set;}
     public int bank_RBS {get; set;}
     public int type_of_card_Visa {get; set;}
-    public int fraud { get; set; }
 
 }
