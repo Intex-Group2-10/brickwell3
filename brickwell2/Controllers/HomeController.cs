@@ -110,5 +110,11 @@ namespace brickwell2.Controllers
         }
 
 
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+        
     }
 }
