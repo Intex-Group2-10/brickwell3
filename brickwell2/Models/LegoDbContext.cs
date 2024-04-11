@@ -17,6 +17,8 @@ public partial class LegoDbContext : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<FraudPrediction> FraudPredictions { get; set; }
+
     public virtual DbSet<ItemBasedRecommendation> ItemBasedRecommendations { get; set; }
 
     public virtual DbSet<LineItem> LineItems { get; set; }
@@ -29,29 +31,64 @@ public partial class LegoDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlite("Data Source=LegoDB.sqlite");
+        => optionsBuilder.UseSqlServer("Server=tcp:brickwellserver.database.windows.net,1433;Initial Catalog=brickwellDB;Persist Security Info=False;User ID=section2group10;Password=wewillwin210@;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>(entity =>
         {
-            // entity.HasNoKey();
-
+            entity.Property(e => e.CustomerId).HasColumnName("customer_ID");
             entity.Property(e => e.BirthDate).HasColumnName("birth_date");
             entity.Property(e => e.CountryOfResidence).HasColumnName("country_of_residence");
-            entity.Property(e => e.CustomerId).HasColumnName("customer_ID");
             entity.Property(e => e.FirstName).HasColumnName("first_name");
             entity.Property(e => e.Gender).HasColumnName("gender");
             entity.Property(e => e.LastName).HasColumnName("last_name");
         });
 
-        modelBuilder.Entity<ItemBasedRecommendation>(entity =>
+        modelBuilder.Entity<FraudPrediction>(entity =>
         {
             entity
                 .HasNoKey()
-                .ToTable("item_based_recommendations");
+                .ToTable("fraud_prediction");
 
-            entity.Property(e => e.ProductId).HasColumnName("product_ID");
+            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.Property(e => e.BankHalifax).HasColumnName("bank_Halifax");
+            entity.Property(e => e.BankHsbc).HasColumnName("bank_HSBC");
+            entity.Property(e => e.BankLloyds).HasColumnName("bank_Lloyds");
+            entity.Property(e => e.BankMetro).HasColumnName("bank_Metro");
+            entity.Property(e => e.BankMonzo).HasColumnName("bank_Monzo");
+            entity.Property(e => e.BankRbs).HasColumnName("bank_RBS");
+            entity.Property(e => e.CountryOfTransactionIndia).HasColumnName("country_of_transaction_India");
+            entity.Property(e => e.CountryOfTransactionRussia).HasColumnName("country_of_transaction_Russia");
+            entity.Property(e => e.CountryOfTransactionUnitedKingdom).HasColumnName("country_of_transaction_UnitedKingdom");
+            entity.Property(e => e.CountryOfTransactionUsa).HasColumnName("country_of_transaction_USA");
+            entity.Property(e => e.DayOfWeekMon).HasColumnName("day_of_week_Mon");
+            entity.Property(e => e.DayOfWeekSat).HasColumnName("day_of_week_Sat");
+            entity.Property(e => e.DayOfWeekSun).HasColumnName("day_of_week_Sun");
+            entity.Property(e => e.DayOfWeekThu).HasColumnName("day_of_week_Thu");
+            entity.Property(e => e.DayOfWeekTue).HasColumnName("day_of_week_Tue");
+            entity.Property(e => e.DayOfWeekWed).HasColumnName("day_of_week_Wed");
+            entity.Property(e => e.EntryModePin).HasColumnName("entry_mode_PIN");
+            entity.Property(e => e.EntryModeTap).HasColumnName("entry_mode_Tap");
+            entity.Property(e => e.ShippingAddressIndia).HasColumnName("shipping_address_India");
+            entity.Property(e => e.ShippingAddressRussia).HasColumnName("shipping_address_Russia");
+            entity.Property(e => e.ShippingAddressUnitedKingdom).HasColumnName("shipping_address_UnitedKingdom");
+            entity.Property(e => e.ShippingAddressUsa).HasColumnName("shipping_address_USA");
+            entity.Property(e => e.Time).HasColumnName("time");
+            entity.Property(e => e.TypeOfCardVisa).HasColumnName("type_of_card_Visa");
+            entity.Property(e => e.TypeOfTransactionOnline).HasColumnName("type_of_transaction_Online");
+            entity.Property(e => e.TypeOfTransactionPos).HasColumnName("type_of_transaction_POS");
+        });
+
+        modelBuilder.Entity<ItemBasedRecommendation>(entity =>
+        {
+            entity.HasKey(e => e.ProductId);
+
+            entity.ToTable("item_based_recommendations");
+
+            entity.Property(e => e.ProductId)
+                .ValueGeneratedNever()
+                .HasColumnName("product_ID");
             entity.Property(e => e.Recommendation1).HasColumnName("Recommendation_1");
             entity.Property(e => e.Recommendation10).HasColumnName("Recommendation_10");
             entity.Property(e => e.Recommendation2).HasColumnName("Recommendation_2");
@@ -66,18 +103,19 @@ public partial class LegoDbContext : DbContext
 
         modelBuilder.Entity<LineItem>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => new { e.TransactionId, e.ProductId });
 
+            entity.Property(e => e.TransactionId).HasColumnName("transaction_ID");
             entity.Property(e => e.ProductId).HasColumnName("product_ID");
             entity.Property(e => e.Qty).HasColumnName("qty");
             entity.Property(e => e.Rating).HasColumnName("rating");
-            entity.Property(e => e.TransactionId).HasColumnName("transaction_ID");
         });
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasNoKey();
+            entity.HasKey(e => e.TransactionId);
 
+            entity.Property(e => e.TransactionId).HasColumnName("transaction_ID");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Bank).HasColumnName("bank");
             entity.Property(e => e.CountryOfTransaction).HasColumnName("country_of_transaction");
@@ -88,15 +126,13 @@ public partial class LegoDbContext : DbContext
             entity.Property(e => e.Fraud).HasColumnName("fraud");
             entity.Property(e => e.ShippingAddress).HasColumnName("shipping_address");
             entity.Property(e => e.Time).HasColumnName("time");
-            entity.Property(e => e.TransactionId).HasColumnName("transaction_ID");
             entity.Property(e => e.TypeOfCard).HasColumnName("type_of_card");
             entity.Property(e => e.TypeOfTransaction).HasColumnName("type_of_transaction");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
-            // entity.HasNoKey();
-
+            entity.Property(e => e.ProductId).HasColumnName("product_ID");
             entity.Property(e => e.Category).HasColumnName("category");
             entity.Property(e => e.Description).HasColumnName("description");
             entity.Property(e => e.ImgLink).HasColumnName("img_link");
@@ -104,18 +140,19 @@ public partial class LegoDbContext : DbContext
             entity.Property(e => e.NumParts).HasColumnName("num_parts");
             entity.Property(e => e.Price).HasColumnName("price");
             entity.Property(e => e.PrimaryColor).HasColumnName("primary_color");
-            entity.Property(e => e.ProductId).HasColumnName("product_ID");
             entity.Property(e => e.SecondaryColor).HasColumnName("secondary_color");
             entity.Property(e => e.Year).HasColumnName("year");
         });
 
         modelBuilder.Entity<UserBasedRecommendation>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("user_based_recommendations");
+            entity.HasKey(e => e.ProductId);
 
-            entity.Property(e => e.ProductId).HasColumnName("product_ID");
+            entity.ToTable("user_based_recommendations");
+
+            entity.Property(e => e.ProductId)
+                .ValueGeneratedNever()
+                .HasColumnName("product_ID");
             entity.Property(e => e.RecommendedProduct1).HasColumnName("Recommended_Product_1");
             entity.Property(e => e.RecommendedProduct10).HasColumnName("Recommended_Product_10");
             entity.Property(e => e.RecommendedProduct2).HasColumnName("Recommended_Product_2");

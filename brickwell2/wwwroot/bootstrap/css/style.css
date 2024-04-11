@@ -308,6 +308,7 @@ a.more {
   position: relative; }
 .why-choose-section .img-wrap:before {
   position: absolute;
+  right: 130px;
   content: "";
   width: 255px;
   height: 217px;
@@ -944,5 +945,29 @@ textarea {
   gap: 20px;
   padding: 4% 6%;
 }
-  
+
+.item-recommend {
+  display: flex;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Keep items in a single line */
+}
+
+.item {
+  flex: 0 0 auto; /* Prevent items from wrapping */
+  padding: 10px;
+  margin-right: 40px; /* Add space between items */
+  text-align: center;
+}
+
+.add-to-cart {
+  background-color: #FEC107;
+  color: #000;
+  font-size: 24px;
+  height: 50px;
+  width: 400px;
+  line-height: 50px;
+  text-align: center;
+  margin: 35px auto auto;
+  border: none;
+}
   

@@ -1,4 +1,4 @@
-
+@* 
 @{
     ViewData["Title"] = "Checkout";
 }
@@ -114,7 +114,7 @@
             <div class="col-md-12">
               <label for="c_address" class="text-black">Shipping Address <span class="text-danger">*</span></label>
               @* <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address"> *@
-              <select id="c_address" class="form-control" onchange="updateShippingAddress()">
+              @* <select id="c_address" class="form-control" onchange="updateShippingAddress()">
                 <option value="" disabled selected>Select country</option>
                 <option value="China">China</option>
                 <option value="India">India</option>
@@ -300,3 +300,4 @@
     }
 </script> 
 }
+ *@

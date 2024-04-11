@@ -5,7 +5,7 @@ namespace brickwell2.Models;
 
 public partial class ItemBasedRecommendation
 {
-    public int? ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public int? Recommendation1 { get; set; }
 

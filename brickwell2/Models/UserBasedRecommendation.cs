@@ -5,7 +5,7 @@ namespace brickwell2.Models;
 
 public partial class UserBasedRecommendation
 {
-    public int? ProductId { get; set; }
+    public int ProductId { get; set; }
 
     public int? RecommendedProduct1 { get; set; }
 
