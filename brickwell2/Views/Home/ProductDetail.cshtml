@@ -16,27 +16,24 @@
         <img src="@Model.Product.ImgLink" alt="lego peacock" style="width: 80%; display: block; margin: auto">
     </div>
     <div style="margin-left: 20px; max-width: 650px">
-        <br><h1>@Model.Product.Name</h1>
-        <h5>@Model.Product.Year</h5>
+        <h2 style="margin-top: 1.5rem;">@Model.Product.Name</h2>
         <h3>$@Model.Product.Price.00</h3>
+        <hr class="title-underline">
+        <form id=@Model.Product.ProductId method="post" asp-page="/Cart"> 
+           <input type="hidden" asp-for="Product.ProductId" />
+           <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+           <button class="add-to-cart" type="submit">Add to Cart</button>
+       </form> 
         <div class="border p-3 mb-3">
           <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">View Product Description</a></h3>
 
           <div class="collapse" id="collapsebank">
         	<div class="py-2">
                 <p class="mb-0">@Model.Product.Description</p>
+                <p><i>@Model.Product.Category</i></p>
         	</div>
           </div>
         </div>
-        @* <p>@Model.Description</p> *@
-        @* <div class="add-to-cart"> *@
-           <form id=@Model.Product.ProductId method="post" asp-page="/Cart"> 
-               <input type="hidden" asp-for="Product.ProductId" />
-               <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-               <button class="add-to-cart" type="submit">Add to Cart</button>
-           </form> 
-        @* </div> *@
-        
     </div>
 </div>
 
