@@ -89,58 +89,58 @@ using Microsoft.EntityFrameworkCore;
 
         app.MapRazorPages();
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var roles = new[] { "Admin", "Customer" };
+        //    var roles = new[] { "Admin", "Customer" };
 
-            foreach (var role in roles)
-            {
-                if (!await roleManager.RoleExistsAsync(role))
-                    await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
+        //    foreach (var role in roles)
+        //    {
+        //        if (!await roleManager.RoleExistsAsync(role))
+        //            await roleManager.CreateAsync(new IdentityRole(role));
+        //    }
+        //}
 
-        using (var scope = app.Services.CreateScope())
-        {
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        //using (var scope = app.Services.CreateScope())
+        //{
+        //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            string email = "admin@section210.com";
-            string password = "Test12345!";
+        //    string email = "admin@section210.com";
+        //    string password = "Test12345!";
 
-            // Check if the user already exists
-            var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                // Create a new user
-                user = new IdentityUser { UserName = email, Email = email };
-                var createUserResult = await userManager.CreateAsync(user, password);
+        //    // Check if the user already exists
+        //    var user = await userManager.FindByEmailAsync(email);
+        //    if (user == null)
+        //    {
+        //        // Create a new user
+        //        user = new IdentityUser { UserName = email, Email = email };
+        //        var createUserResult = await userManager.CreateAsync(user, password);
 
-                // Check if user creation was successful
-                if (createUserResult.Succeeded)
-                {
-                    // User created successfully, now add to the "Admin" role
-                    var addToRoleResult = await userManager.AddToRoleAsync(user, "Admin");
+        //        // Check if user creation was successful
+        //        if (createUserResult.Succeeded)
+        //        {
+        //            // User created successfully, now add to the "Admin" role
+        //            var addToRoleResult = await userManager.AddToRoleAsync(user, "Admin");
 
-                    // Check if adding to role was successful
-                    if (!addToRoleResult.Succeeded)
-                    {
-                        // User role assignment failed, log the errors
-                        var roleErrors = addToRoleResult.Errors.Select(e => e.Description).ToList();
-                        string roleErrorMessages = string.Join(", ", roleErrors);
-                        throw new InvalidOperationException($"User created but adding user with email '{email}' to role 'Admin' failed. Details: {roleErrorMessages}");
-                    }
-                }
-                else
-                {
-                    // User creation failed, log the errors
-                    var userErrors = createUserResult.Errors.Select(e => e.Description).ToList();
-                    string userErrorMessages = string.Join(", ", userErrors);
-                    throw new InvalidOperationException($"Unexpected error occurred creating user with email '{email}'. Details: {userErrorMessages}");
-                }
-            }
-        }
+        //            // Check if adding to role was successful
+        //            if (!addToRoleResult.Succeeded)
+        //            {
+        //                // User role assignment failed, log the errors
+        //                var roleErrors = addToRoleResult.Errors.Select(e => e.Description).ToList();
+        //                string roleErrorMessages = string.Join(", ", roleErrors);
+        //                throw new InvalidOperationException($"User created but adding user with email '{email}' to role 'Admin' failed. Details: {roleErrorMessages}");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            // User creation failed, log the errors
+        //            var userErrors = createUserResult.Errors.Select(e => e.Description).ToList();
+        //            string userErrorMessages = string.Join(", ", userErrors);
+        //            throw new InvalidOperationException($"Unexpected error occurred creating user with email '{email}'. Details: {userErrorMessages}");
+        //        }
+        //    }
+        //}
 
 
         app.Run();
