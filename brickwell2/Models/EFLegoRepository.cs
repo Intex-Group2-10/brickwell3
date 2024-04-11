@@ -11,6 +11,7 @@ namespace brickwell2.Models
 		}
 
 		public IQueryable<Customer> Customers => _context.Customers;
+		public IEnumerable<ItemBasedRecommendation> ItemBasedRecommendations => _context.ItemBasedRecommendations;
 
 		public IQueryable<LineItem> LineItems => _context.LineItems;
 
