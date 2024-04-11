@@ -969,5 +969,11 @@ textarea {
   text-align: center;
   margin: 35px auto auto;
   border: none;
+
+.my-dashboard-component {
+  height: 850px;
+  width: 100%;
+}
+  
 }
   

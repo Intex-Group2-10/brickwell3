@@ -5,6 +5,7 @@ using brickwell2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using System.Drawing.Printing;
+using System.Security.Cryptography;
 
 namespace brickwell2.Controllers
 { 
@@ -21,8 +22,23 @@ namespace brickwell2.Controllers
 
         public IActionResult Index()
         {
-            return View();
+        //     string nonce = Nonce();
+        //     ViewBag.Nonce = nonce;
+        //
+        //     string csp = $"default-src 'self'; script-src 'self' 'nonce-{nonce}'; style-src 'self' 'nonce-{nonce}';";
+        //     Response.Headers.Add("Content-Security-Policy", csp);
+         return View();
         }
+        //
+        // private string Nonce()
+        // {
+        //     byte[] nonceBytes = new byte[16];
+        //     using (var rng = new RNGCryptoServiceProvider())
+        //     {
+        //         rng.GetBytes(nonceBytes);
+        //     }
+        //     return Convert.ToBase64String(nonceBytes);
+        // }
 
         public IActionResult Privacy()
         {

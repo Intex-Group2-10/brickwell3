@@ -74,7 +74,11 @@
     </nav>
 </header>
 <body>
-<div>@RenderBody()</div>
+
+<div>
+    <partial name="_CookieConsentPartial"/>
+    @RenderBody()
+</div>
 
 <footer class="footer">
     <div class="footer-content">
@@ -82,15 +86,15 @@
             <img class="lego-guy" src="~/images/legoguy2.png"/>
             <img class="brickwell-logo" src="~/images/BRICKWELL-4-8-2024.png"/>
             <div class="btext">
-                <p>At Brickwell, we're more than just a LEGO set store - we're enthusiasts, builders, and dreamers. We curate the latest and most 
-                exciting LEGO sets, ensuring that every product we offer sparks creativity and imagination. Whether you're a seasoned builder 
-                or just starting, Brickwell is your ultimate destination for all things LEGO.</p>
+                <p>At Brickwell, we're more than just a LEGO set store - we're enthusiasts, builders, and dreamers. We curate the latest and most
+                    exciting LEGO sets, ensuring that every product we offer sparks creativity and imagination. Whether you're a seasoned builder
+                    or just starting, Brickwell is your ultimate destination for all things LEGO.</p>
             </div>
         </div>
         <div class="footer-links1">
-        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></div>
-        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="About">Our Team</a></div>
-        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a></div>
+            <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></div>
+            <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="About">Our Team</a></div>
+            <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="ContactUs">Contact Us</a></div>
         </div>
         <div class="footer-links">
             <div>© 2024 Brickwell, Inc.</div>
@@ -106,5 +110,6 @@
 <script src="~/bootstrap/js/tiny-slider.js"></script>
 <script src="~/bootstrap/js/custom.js"></script>
 @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>
