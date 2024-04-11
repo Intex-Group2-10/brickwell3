@@ -33,21 +33,6 @@ namespace brickwell2.Models
 			_context.Orders.Remove(order);
 			_context.SaveChanges();
 		}
-		public void AddCustomer(Customer customer)
-		{
-			_context.Add(customer);
-			_context.SaveChanges();
-		}
-		public void EditCustomer(Customer customer)
-		{
-			_context.Update(customer);
-			_context.SaveChanges();
-		}
-		public void DeleteCustomer(Customer customer)
-		{
-			_context.Customers.Remove(customer);
-			_context.SaveChanges();
-		}
 		
 		public void AddProduct(Product product)
 		{
