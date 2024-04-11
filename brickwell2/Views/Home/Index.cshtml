@@ -3,6 +3,8 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
+@model Product
+
 <div style="width: 100vw; height: 506px; position: relative">
   <div style="width: 100%; height: 506px; right: 0px; top: 0px; position: absolute; background: #FFF6C9"></div>
   <div style="width: 160px; height: 47.91px; left: 142px; top: 380px; position: absolute">
@@ -35,7 +37,7 @@
 
 			<!-- Start Column 2 -->
 			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="27">
 					<img src="~/images/27_peacock.webp" class="img-fluid product-thumbnail">
 					<h3 class="product-title">Exotic Peacock</h3>
 					<strong class="product-price">$20.00</strong>
@@ -49,7 +51,7 @@
 
 			<!-- Start Column 3 -->
 			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="33">
 					<img src="~/images/33_astronaut.webp" class="img-fluid product-thumbnail">
 					<h3 class="product-title">Space Astronaut</h3>
 					<strong class="product-price">$55.00</strong>
@@ -63,7 +65,7 @@
 
 			<!-- Start Column 4 -->
 			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="34">
 					<img src="~/images/34_uphouse.webp" class="img-fluid product-thumbnail">
 					<h3 class="product-title">"Up" House</h3>
 					<strong class="product-price">$60.00</strong>
