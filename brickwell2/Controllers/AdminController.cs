@@ -281,10 +281,4 @@ public class AdminController : Controller
             return View(uniqueId);
         }
     }
-
-    public IActionResult RegisterUserModel()
-    {
-        return View();
-    }
-
 }
