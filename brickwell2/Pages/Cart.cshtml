@@ -6,37 +6,6 @@
 <div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
 	<h1 style="font-size: 60px;">Your Cart</h1>
 </div>
-@*     <tbody> *@
-@*         @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>()) *@
-@*         { *@
-@*             <tr> *@
-@*                 <td class="text-left">@l.Product.Name</td> *@
-@*                 <td class="text-center">@l.Quantity</td> *@
-@*                 <td class="text-right">@l.Product.Price</td> *@
-@*                 <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td> *@
-@*                 <td class="text-center"> *@
-@*                     <form asp-page-handler="Remove" method="post"> *@
-@*                         <input type="hidden" name="ProductId" value="@l.Product.ProductId" /> *@
-@*                         <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl." /> *@
-@*                         <button type="submit" class="btn btn-sm btn btn-danger"> *@
-@*                             Remove *@
-@*                         </button> *@
-@*                     </form> *@
-@*                 </td> *@
-@*             </tr> *@
-@*         } *@
-@*     </tbody> *@
-@*     <tfoot> *@
-@*         <tr> *@
-@*             <td colspan="3" class="text-right">Total:</td> *@
-@*             <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td> *@
-@*         </tr> *@
-@*     </tfoot> *@
-@* </table> *@
-@* <div class="text-center"> *@
-@*   <a class="btn btn-primary" href="@Model.ReturnUrl">Back</a> *@
-@* </div> *@
-@* <br><br><br><br><br> ewrklfwfrf.ldkscm;adjvoiajdvoijdovijafkvadfdsklfmwfkvmklefvekfvpoekpveopfkvpkoefvknv;lkdafnv'kadmfv'pkaldmf'vkl*@
 <div class="untree_co-section before-footer-section">
   <div class="container">
     <div class="row mb-5">
@@ -84,8 +53,9 @@
       <div class="col-md-6">
         <div class="row mb-5">
           <div class="col-md-6">
-            <a class="btn btn-sm btn-block" style="font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" href="@Model.ReturnUrl">Continue Shopping</a>
-          </div>
+            <a class="btn btn-sm btn-block" style="font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" asp-controller="Home" asp-action="Products" >Continue Shopping</a>
+          @* href="@Model.ReturnUrl" *@
+            </div>
         </div>
       </div>
       <div class="col-md-6 pl-5">

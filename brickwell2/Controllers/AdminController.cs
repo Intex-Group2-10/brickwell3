@@ -39,6 +39,26 @@ public class AdminController : Controller
     //    };
     //    return View(product);
     //}
+    [HttpGet]
+    public IActionResult AddProduct()
+    {
+        return View("AdminProducts", model: new Product());
+    }
+    
+    [HttpPost]
+    public IActionResult AddProduct(Product response)
+    {
+        if (ModelState.IsValid)
+        {
+            _repo.AddProduct(response);
+            return View("AdminProducts", response);
+        }
+        else
+        {
+            return View(response);
+        }
+    }
+
     public IActionResult AdminProducts(int pageNum)
     {
         int pageSize = 10;
@@ -143,12 +163,15 @@ public class AdminController : Controller
 
     [HttpPost]
     public IActionResult DeleteProduct(Product deleteInfo)
+    public IActionResult DeleteProduct(Product delete)
     {
-        _repo.DeleteProduct(deleteInfo);
-        // _repo.Products.Remove(product);
-        // _repo.SaveChanges();
+        _repo.DeleteProduct(delete);
 
-        return RedirectToAction("AdminUsers");
+        return RedirectToAction("AdminProducts");
+        // _repo.Products.Remove(deleteinfo);
+        // _repo.SaveChanges();
+        //
+        // return RedirectToAction("AdminUsers");
     }
 
     //public IActionResult AdminUsers(int pageNum)

@@ -43,10 +43,12 @@ namespace brickwell2.Controllers
         {
             return View();
         }
-        
-        public IActionResult ProductDetail()
+        [HttpGet]
+        public IActionResult ProductDetail(int id)
         {
-            return View();
+            var productToDisplay = _repo.Products
+                .Single(x => x.ProductId == id);
+            return View(productToDisplay);
         }
 
         public IActionResult Test()
@@ -80,7 +82,7 @@ namespace brickwell2.Controllers
 
         public IActionResult Products(int pageNum, string? productCategory)
         {
-            int pageSize = 3;
+            int pageSize = 10;
 
             // Ensure pageNum is at least 1
             pageNum = Math.Max(pageNum, 1);

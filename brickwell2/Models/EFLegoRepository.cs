@@ -18,9 +18,9 @@ namespace brickwell2.Models
 
 		public IQueryable<Product> Products => _context.Products;
 		
-		public void AddOrder(Order order)
+		public void AddUser(AspNetUser adduser)
 		{
-			_context.Add(order);
+			_context.Add(adduser);
 			_context.SaveChanges();
 		}
 		public void EditOrder(Order order)
