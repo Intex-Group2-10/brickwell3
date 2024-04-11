@@ -1,0 +1,11 @@
+﻿
+@model IEnumerable<string>
+
+<div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">Homecuh</a>
+
+    @foreach(string prod in Model ?? Enumerable.Empty<string>())
+    {
+        <a class=" btn @(prod == ViewBag.SelectProductCategory ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productCategory="@prod" asp-route-pageNum="1">@prod</a>
+    }
+</div>

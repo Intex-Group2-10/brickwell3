@@ -1,0 +1,42 @@
+﻿@model Cart
+
+<style>
+    .text-black {
+        color: black;
+    }
+
+    .cart-description {
+        font-size: larger; /* Adjust this value as needed */
+    }
+
+    .cart-link {
+        display: inline-block; /* Ensures the link behaves like an inline block element */
+        padding: 0; /* Removes padding */
+        border: none; /* Removes border */
+        background: none; /* Removes background */
+    }
+
+        .cart-link:focus {
+            outline: none; /* Removes focus outline */
+        }
+
+        .cart-link img {
+            vertical-align: middle; /* Aligns the image vertically */
+        }
+</style>
+
+<div class="">
+    @if (Model.Lines.Count() > 0)
+    {
+        <small class="navbar-text text-black cart-description">
+            <b>Your Cart: </b>
+            @Model.Lines.Sum(x => x.Quantity) item(s)
+            @Model.CalculateTotal().ToString("c")
+        </small>
+    }
+
+    <a class="cart-link text-black" asp-page="/Cart"
+       asp-route-returnurl="@ViewContext.HttpContext.Request.PathAndQuery()">
+        <img src="~/images/legocart.png" style="width: 45px;">
+    </a>
+</div>

@@ -1,0 +1,302 @@
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+@model FraudPrediction
+
+<div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
+    <h1 style="font-size: 60px;">Checkout</h1>
+</div>
+<div class="untree_co-section">
+<div class="container">
+  <div class="row mb-5">
+    <div class="col-md-12">
+      <div class="border p-4 rounded" role="alert">
+        Returning customer? <a href="#">Click here</a> to login
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-5 mb-md-0">
+      <h2 class="h3 mb-3 text-black">Billing Details</h2>
+      <div class="p-3 p-lg-5 border bg-white">
+        <form action="/Home/Predict#predictionResult" method="post">
+          <div class="form-group">
+            <label for="c_country" class="text-black">Country for billing <span class="text-danger">*</span></label>
+            <select id="c_country" class="form-control" onchange="updateCountryTransaction()">
+              <option value="" disabled selected>Select country</option>
+              <option value="China">China</option>
+              <option value="India">India</option>
+              <option value="Russia">Russia</option>
+              <option value="USA">United States of America</option>
+              <option value="UnitedKingdom">United Kingdom</option>
+            </select>
+          </div>
+          <input type="hidden" asp-for="country_of_transaction_India" id="countryTransactionIndia" value="0" />
+          <input type="hidden" asp-for="country_of_transaction_Russia" id="countryTransactionRussia" value="0" />
+          <input type="hidden" asp-for="country_of_transaction_USA" id="countryTransactionUSA" value="0" />
+          <input type="hidden" asp-for="country_of_transaction_UnitedKingdom" id="countryTransactionUnitedKingdom" value="0" />
+          
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="c_fname" name="c_fname">
+            </div>
+            <div class="col-md-6">
+              <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="c_lname" name="c_lname">
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <div class="col-md-6">
+              <label for="bank" class="text-black">Bank <span class="text-danger">*</span></label>
+              <select id="bank" class="form-control" onchange="updateBank()">
+                <option value="" disabled selected>Select bank</option>
+                <option value="Barclays">Barclays</option>
+                <option value="HSBC">HSBC</option>
+                <option value="Halifax">Halifax</option>
+                <option value="Lloyds">Lloyds</option>
+                <option value="Metro">Metro</option>
+                <option value="Monzo">Monzo</option>
+                <option value="RBS">RBS</option>
+              </select>
+            </div>
+            <input type="hidden" asp-for="bank_HSBC" id="bankHSBC" value="0" />
+            <input type="hidden" asp-for="bank_Halifax" id="bankHalifax" value="0" />
+            <input type="hidden" asp-for="bank_Lloyds" id="bankLloyds" value="0" />
+            <input type="hidden" asp-for="bank_Metro" id="bankMetro" value="0" />
+            <input type="hidden" asp-for="bank_Monzo" id="bankMonzo" value="0" />
+            <input type="hidden" asp-for="bank_RBS" id="bankRBS" value="0" />
+            
+            <div class="col-md-6">
+              <label for="cardType" class="text-black">Type of Card <span class="text-danger">*</span></label>
+              <select id="cardType" class="form-control" onchange="updateCardType()">
+                <option value="" disabled selected>Select card</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="Visa">Visa</option>
+              </select>
+            </div>
+            <input type="hidden" asp-for="type_of_card_Visa" id="typeofcardVisa" value="0" />
+          </div>
+          
+          
+
+          <div class="form-group row mb-5">
+          
+            <div class="col-md-6">
+              <label for="transactionType" class="text-black">Transaction Method <span class="text-danger">*</span></label>
+              <select id="transactionType" class="form-control" onchange="updateTransactionType()">
+                <option value="" disabled selected>Select method</option>
+                <option value="Online">Online</option>
+                <option value="ATM">ATM</option>
+                <option value="POS">POS</option>
+              </select>
+            </div>
+            <input type="hidden" asp-for="type_of_transaction_Online" id="transactionTypeOnline" value="0" />
+            <input type="hidden" asp-for="type_of_transaction_POS" id="transactionTypePOS" value="0" />
+
+            <div class="col-md-6">
+              <label for="entryMode" class="text-black">Entry Mode <span class="text-danger">*</span></label>
+              <select id="entryMode" class="form-control" onchange="updateEntryMode()">
+                <option value="" disabled selected>Select mode</option>
+                <option value="CVV">CVV</option>
+                <option value="PIN">PIN</option>
+                <option value="Tap">Tap</option>
+              </select>
+            </div>
+            <input type="hidden" asp-for="entry_mode_PIN" id="entryModePIN" value="0" />
+            <input type="hidden" asp-for="entry_mode_Tap" id="entryModeTap" value="0" />
+
+          </div>
+          
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="c_address" class="text-black">Shipping Address <span class="text-danger">*</span></label>
+              @* <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address"> *@
+              <select id="c_address" class="form-control" onchange="updateShippingAddress()">
+                <option value="" disabled selected>Select country</option>
+                <option value="China">China</option>
+                <option value="India">India</option>
+                <option value="Russia">Russia</option>
+                <option value="USA">United States of America</option>
+                <option value="UnitedKingdom">United Kingdom</option>
+              </select>
+            </div>
+            <input type="hidden" asp-for="shipping_address_India" id="shippingAddressIndia" value="0" />
+            <input type="hidden" asp-for="shipping_address_Russia" id="shippingAddressRussia" value="0" />
+            <input type="hidden" asp-for="shipping_address_USA" id="shippingAddressUSA" value="0" />
+            <input type="hidden" asp-for="shipping_address_UnitedKingdom" id="shippingAddressUnitedKingdom" value="0" />
+          </div>
+          
+          <div class="form-group">
+            <label for="c_order_notes" class="text-black">Order Notes</label>
+            <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+      
+    <div class="col-md-6">
+
+        
+
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <h2 class="h3 mb-3 text-black">Your Order</h2>
+          <div class="p-3 p-lg-5 border bg-white">
+            <table class="table site-block-order-table mb-5">
+              <thead>
+              <th>Product</th>
+              <th>Total</th>
+              </thead>
+              <tbody>
+              <tr>
+                <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td>
+                <td>$250.00</td>
+              </tr>
+              <tr>
+                <td>Polo Shirt <strong class="mx-2">x</strong>   1</td>
+                <td>$100.00</td>
+              </tr>
+              <tr>
+                <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                <td class="text-black">$350.00</td>
+              </tr>
+              <tr>
+                <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                <td class="text-black font-weight-bold"><strong>$350.00</strong></td>
+              </tr>
+              </tbody>
+            </table>
+
+            <div class="border p-3 mb-3">
+              <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Return Policy</a></h3>
+              
+              <div class="collapse" id="collapsebank">
+                <div class="py-2">
+                  <p class="mb-0">Due to a high amount of fraudulent orders, we have paused the ability to accept returns. Additionally, your order will not be shipped until your bank has verified the payment type you've selected.</p>
+                </div>
+              </div>
+            </div>
+              
+            <div class="form-group">
+              <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-md-12">
+          <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+          <div class="p-3 p-lg-5 border bg-white">
+
+            <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+            <div class="input-group w-75 couponcode-wrap">
+              <input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- </form> -->
+</div>
+</div>
+@section Scripts{
+    <script>
+    function updateDayOfWeek() {
+        // Reset all day of the week values to 0
+        document.getElementsByName("day_of_week_Mon")[0].value = 0;
+        document.getElementsByName("day_of_week_Tue")[0].value = 0;
+        document.getElementsByName("day_of_week_Wed")[0].value = 0;
+        document.getElementsByName("day_of_week_Thu")[0].value = 0;
+        document.getElementsByName("day_of_week_Sat")[0].value = 0;
+        document.getElementsByName("day_of_week_Sun")[0].value = 0;
+        // Get the selected day of the week from the dropdown
+        var selectedDay = document.getElementById("dayOfWeek").value;
+        // Set the corresponding day of the week value to 1
+        document.getElementsByName("day_of_week_" + selectedDay)[0].value = 1;
+    }
+// JavaScript functions to update corresponding hidden inputs based on user selection
+    function updateEntryMode() {
+        // Reset all entry mode values to 0
+        document.getElementById("entryModePIN").value = 0;
+        document.getElementById("entryModeTap").value = 0;
+
+        // Get the selected entry mode from the dropdown
+        var selectedEntryMode = document.getElementById("entryMode").value;
+
+        // Set the corresponding entry mode value to 1
+        document.getElementById("entryMode" + selectedEntryMode).value = 1;
+    }
+
+    function updateTransactionType() {
+        // Reset all transaction type values to 0
+        document.getElementById("transactionTypeOnline").value = 0;
+        document.getElementById("transactionTypePOS").value = 0;
+
+        // Get the selected transaction type from the dropdown
+        var selectedTransactionType = document.getElementById("transactionType").value;
+
+        // Set the corresponding transaction type value to 1
+        document.getElementById("transactionType" + selectedTransactionType).value = 1;
+    }
+    
+    function updateCountryTransaction() {
+        // Reset all country of transaction inputs to 0
+        document.getElementsByName("country_of_transaction_India")[0].value = 0;
+        document.getElementsByName("country_of_transaction_Russia")[0].value = 0;
+        document.getElementsByName("country_of_transaction_USA")[0].value = 0;
+        document.getElementsByName("country_of_transaction_UnitedKingdom")[0].value = 0;
+        var selectedCountry = document.getElementById("countryTransaction").value;
+
+        // Set the value of the selected country input to 1
+        document.getElementsByName("country_of_transaction_" + selectedCountry)[0].value = 1;
+    }
+
+    function updateShippingAddress() {
+        // Reset all shipping address inputs to 0
+        document.getElementsByName("shipping_address_India")[0].value = 0;
+        document.getElementsByName("shipping_address_Russia")[0].value = 0;
+        document.getElementsByName("shipping_address_USA")[0].value = 0;
+        document.getElementsByName("shipping_address_UnitedKingdom")[0].value = 0;
+
+        var selectedAddress = document.getElementById("shippingAddress").value;
+
+        // Set the value of the selected shipping address input to 1
+        document.getElementsByName("shipping_address_" + selectedAddress)[0].value = 1;
+    }
+
+    function updateCardType() {
+        // Reset all card type inputs to 0
+        document.getElementsByName("type_of_card_Visa")[0].value = 0;
+               
+        var selectedCard = document.getElementById("cardType").value;
+
+        // Set the value of the selected card type input to 1
+        document.getElementsByName("type_of_card_" + selectedCard)[0].value = 1;
+    }
+
+    function updateBank() {
+        // Reset all bank inputs to 0
+        document.getElementsByName("bank_HSBC")[0].value = 0;
+        document.getElementsByName("bank_Halifax")[0].value = 0;
+        document.getElementsByName("bank_Lloyds")[0].value = 0;
+        document.getElementsByName("bank_Metro")[0].value = 0;
+        document.getElementsByName("bank_Monzo")[0].value = 0;
+        document.getElementsByName("bank_RBS")[0].value = 0;
+
+        var selectedBank = document.getElementById("bank").value;
+
+        // Set the value of the selected bank input to 1
+        document.getElementsByName("bank_" + selectedBank)[0].value = 1;
+    }
+</script> 
+}

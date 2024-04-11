@@ -1,0 +1,41 @@
+@model PaginationListViewModel
+@{
+    Layout = "_AdminLayout";
+}
+<div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
+    <h1 style="font-size: 60px;">Users</h1>
+</div>
+
+<!--Make the movie list table and bring in data from the Model-->
+
+<table class="table table-bordered">
+
+    <thead class="fw-bold">
+    <tr>
+        <td>User ID</td>
+        <td>Password</td>
+        <td>Email</td>
+        <td>Two Factor Authentication</td>
+        <td>Admin</td>
+        <td><a class="btn btn-danger" asp-controller="Admin" asp-action="">Add User</a></td>
+    </tr>
+        
+    </thead>
+    
+    @foreach (var x in Model.AspNetUsers)
+    {
+        <tbody>
+        <tr>
+            <td>@x.Id</td>
+            <td>@x.UserName</td>
+            <td>@x.Email</td>
+            <td>@x.PasswordHash</td>
+            <td>@x.PhoneNumber</td>
+            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditCustomer" asp-route-id="@x.Id">Edit</a></td>
+            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteCustomer" asp-route-id="@x.Id">Delete</a></td>
+        </tr>
+        </tbody>
+    }
+    
+</table>
+<div page-model="@Model.PaginationInfo" page-action="AdminUsers"></div>

@@ -1,0 +1,16 @@
+﻿@using brickwell2.Infrastructure
+
+@model Product
+
+<div class="card m-1 p-1">
+    <img src="@Model.ImgLink" alt="@Model.Name" style="width: 200px; height: auto;" /> <!-- Adjust the width as needed -->
+    <h3>@Html.Raw(Model.Name.Replace("LEGO¬Æ", "LEGO&reg;").Replace("‚Ñ¢", "&trade;"))</h3>
+    <h6>$@Model.Price</h6>
+
+    <form id=@Model.ProductId method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="ProductId" />
+        <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+        <button type="submit" class="btn-outline-success btn-sm float-end">Add to Cart</button>
+    </form>
+
+</div>

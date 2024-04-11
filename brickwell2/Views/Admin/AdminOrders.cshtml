@@ -1,0 +1,52 @@
+@model List<Order>
+@{
+    Layout = "_AdminLayout";
+}
+<div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
+    <h1 style="font-size: 60px;">Orders</h1>
+</div>
+
+<!--Make the movie list table and bring in data from the Model-->
+
+<table class="table table-bordered">
+
+    <thead class="fw-bold">
+    <tr>
+        <td>Transaction ID</td>
+        <td>Customer ID</td>
+        <td>Date</td>
+        <td>Day of week</td>
+        <td>Time</td>
+        <td>Amount</td>
+        <td>Type of Transaction</td>
+        <td>Country of Transaction</td>
+        <td>Shipping Address</td>
+        <td>Bank</td>
+        <td>Type of Card</td>
+        <td>Fraud</td>
+    </tr>
+        
+    </thead>
+        @foreach (var x in Model.Where(x => x.Fraud == 1))
+    {
+        <tbody>
+        <tr>
+            <td>@x.TransactionId</td>
+            <td>@x.CustomerId</td>
+            <td>@x.Date</td>
+            <td>@x.DayOfWeek</td>
+            <td>@x.Time</td>
+            <td>@x.Amount</td>
+            <td>@x.TypeOfTransaction</td>
+            <td>@x.CountryOfTransaction</td>
+            <td>@x.ShippingAddress</td>
+            <td>@x.Bank</td>
+            <td>@x.TypeOfCard</td>
+            <td>@x.Fraud</td>
+            @* <td><a class="btn btn-info" asp-controller="Admin" asp-action="Edit" asp-route-id="@x.CustomerId">Edit</a></td> *@
+            @* <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteCustomer" asp-route-id="@x.CustomerId">Delete</a></td> *@
+        </tr>
+
+        </tbody>
+    }
+</table>
