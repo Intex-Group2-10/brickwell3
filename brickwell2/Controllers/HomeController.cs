@@ -50,7 +50,6 @@ namespace brickwell2.Controllers
                 .Single(x => x.ProductId == id);
             return View(productToDisplay);
         }
-
         public IActionResult Test()
         {
             var viewUsers = _securityRepository.AspNetUsers.ToList();

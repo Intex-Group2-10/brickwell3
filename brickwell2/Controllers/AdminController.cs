@@ -39,6 +39,7 @@ public class AdminController : Controller
     //    };
     //    return View(product);
     //}
+    
     [HttpGet]
     public IActionResult AddProduct()
     {
@@ -129,7 +130,7 @@ public class AdminController : Controller
             {
                 CurrentPage = pageNum,
                 ProductsPerPage = pageSize,
-                TotalProducts = orderQuery.Count() // Count of all orders where fraud equals 1
+                TotalProducts = orderQuery.Where(x => x.Fraud == 1).Count() // Count of all orders where fraud equals 1
             }
         };
 
@@ -162,7 +163,6 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteProduct(Product deleteInfo)
     public IActionResult DeleteProduct(Product delete)
     {
         _repo.DeleteProduct(delete);
