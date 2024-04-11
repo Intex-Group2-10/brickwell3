@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Product Detail";
 }
-@model Product
+@model ItemRecommendationViewModel
 <div class="container1">
     <div class="backto">
         <a asp-controller="Home" asp-action="Products">
@@ -12,25 +12,25 @@
 </div>
 <div class="prod-detail">
     <div>
-        <img src="@Model.ImgLink" alt="lego peacock" style="width: 80%; display: block; margin: auto">
+        <img src="@Model.Products.ImgLink" alt="lego peacock" style="width: 80%; display: block; margin: auto">
     </div>
     <div style="margin-left: 20px; max-width: 650px">
-        <br><h1>@Model.Name</h1>
-        <h5>@Model.Year</h5>
-        <h3>$@Model.Price.00</h3>
+        <br><h1>@Model.Products.Name</h1>
+        <h5>@Model.Products.Year</h5>
+        <h3>$@Model.Products.Price.00</h3>
         <div class="border p-3 mb-3">
           <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">View Product Description</a></h3>
 
           <div class="collapse" id="collapsebank">
         	<div class="py-2">
-                <p class="mb-0">@Model.Description</p>
+                <p class="mb-0">@Model.Products.Description</p>
         	</div>
           </div>
         </div>
         @* <p>@Model.Description</p> *@
         @* <div class="add-to-cart"> *@
-           <form id=@Model.ProductId method="post" asp-page="/Cart"> 
-               <input type="hidden" asp-for="ProductId" />
+           <form id=@Model.Products.ProductId method="post" asp-page="/Cart"> 
+               <input type="hidden" asp-for="Products.ProductId" />
                <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
                <button class="add-to-cart" type="submit">Add to Cart</button>
            </form> 

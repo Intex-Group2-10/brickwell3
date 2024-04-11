@@ -48,9 +48,8 @@ namespace brickwell2.Controllers
         {
             var productToDisplay = _repo.Products
                 .Single(x => x.ProductId == id);
-            return View(productToDisplay);
+            return View();
         }
-
         public IActionResult Test()
         {
             var viewUsers = _securityRepository.AspNetUsers.ToList();
@@ -110,5 +109,11 @@ namespace brickwell2.Controllers
         }
 
 
+
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+        
     }
 }
