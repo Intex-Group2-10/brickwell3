@@ -65,17 +65,15 @@ public class AdminController : Controller
     {
         var recordToEdit = _repo.Products
             .Single(x => x.ProductId == id);
-
-        return View("AdminUsers", recordToEdit);
-        // ViewBag.categories = _repo.Products.ToList();
-        // return View("AdminUsers");
+        
+        return View(recordToEdit);
     }
     
     [HttpPost]
-    public IActionResult EditProducts (Models.Product product)
+    public IActionResult EditProduct (Product product)
     {
-        _repo.AddProduct(product);
-        return RedirectToAction("AdminUsers");
+        _repo.EditProduct(product);
+        return RedirectToAction("AdminProducts");
     }
     
     [HttpGet]
@@ -88,9 +86,9 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult DeleteProduct (Models.Customer deleteInfo)
+    public IActionResult DeleteProduct (Models.Product deleteInfo)
     {
-        // _repo.DeleteCustomer(deleteInfo);
+        _repo.DeleteProduct(deleteInfo);
 
         return RedirectToAction("AdminUsers");
     }
