@@ -6,11 +6,12 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using brickwell2.Models.ViewModels;
 using SQLitePCL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace brickwell2.Controllers;
-
 public class AdminController : Controller
 {
+
     private ILegoRepository _repo;
     private ILegoSecurityRepository _securityRepo;
 

@@ -12,6 +12,10 @@
         <a asp-controller="Home" asp-action="Products" style="text-decoration: none;"><h1 class="continue-shop">Continue Shopping</h1></a>
         </div>
 </div>
+<form method="post" asp-page="/Cart" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+    <input type="hidden" name="ProductId" value="@Model.Product.ProductId" />
+    <button type="submit" class="btn btn-primary">Add to Cart</button>
+</form>
 <div class="prod-detail">
     <div>
         <img src="@Model.Product.ImgLink" alt="@Model.Product.Name" style="width: 80%; display: block; margin: auto">
