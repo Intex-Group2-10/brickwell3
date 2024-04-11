@@ -5,7 +5,7 @@
 <div class="col-12 col-md-4 col-lg-4 mb-5">
     <a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@Model.ProductId">
         <input type="hidden" asp-for="@Model.ProductId">
-        <img src="@Model.ImgLink" alt="@Model.Name" class="img-fluid product-thumbnail">
+        <img src="@Model.ImgLink" alt="@Model.Name" class="img-fluid product-thumbnail" style="height: 220px; width: auto">
         <h3 class="product-title">@Html.Raw(Model.Name.Replace("LEGO¬Æ", "LEGO&reg;").Replace("‚Ñ¢", "&trade;"))</h3>
         <strong class="product-price">$@Model.Price.00</strong>
         <span class="icon-cross">
