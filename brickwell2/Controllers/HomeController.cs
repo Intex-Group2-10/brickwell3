@@ -48,6 +48,7 @@ namespace brickwell2.Controllers
         {
             var productToDisplay = _repo.Products.Single(x => x.ProductId == id);
 
+
             // Retrieve recommendations for the product
             var recommendations = _repo.ItemBasedRecommendations
                 .Where(r => r.ProductId == id)
@@ -112,7 +113,7 @@ namespace brickwell2.Controllers
 
         public IActionResult Products(int pageNum, string? productCategory)
         {
-            int pageSize = 10;
+            int pageSize = 6;
 
             // Ensure pageNum is at least 1
             pageNum = Math.Max(pageNum, 1);
