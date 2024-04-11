@@ -1,20 +1,83 @@
-﻿<html>
-    <head>
-        <meta name="viewport" content="width=device-width" />
-        <title>ShoppingProject</title>
-        <link href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" rel="stylesheet" />
-    </head>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="bootstrap, bootstrap4"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"]</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="~/bootstrap/css/tiny-slider.css"/>
+    <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/bootstrap/css/style.css"/>
+    <link rel="shortcut icon" href="~/favicon.ico">
+</head>
+<header>
+    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+        <div class="container">
+            <a asp-controller="Home" asp-action="Index"><img src="~/images/BRICKWELL-4-8-2024.png" style="width: 200px;"/></a>
+            @* drop down button for collapsable navbar *@
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                <li class="nav-item @(Context.Request.Path == "/" ? "active" : "")">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item @(Context.Request.Path == "/Home/Products" ? "active" : "")">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Products">Shop</a>
+                </li>
+                <li class="nav-item @(Context.Request.Path == "/Home/About" ? "active" : "")">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                </li>
+                @{
+                    string path = Context.Request.Path;
+                    bool isActive = path.StartsWith("/Cart");
+                }
+                <li class="nav-item @(isActive ? "active" : "")">
+                    <vc:cart-summary/>
+                </li>
+                <li class="nav-item @(Context.Request.Path == "/Identity/Account/Login" ? "active" : "")">
+                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><img src="~/images/legohead.png" style="width: 48px;"></a>
+                </li>
+            </ul>
 
-    <body>
-        <div>
-            <div class="bg-dark text-white p-2">
-                Shopping Project CHANGE THIS
-            </div>
-
-            <div class="m-1 p-1">
-                @RenderBody()
-            </div> 
-        
         </div>
-    </body>
+    </nav>
+</header>
+<body>
+<div>@RenderBody()</div>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="main-color-bg">
+            <img class="lego-guy" src="~/images/legoguy2.png"/>
+            <img class="brickwell-logo" src="~/images/BRICKWELL-4-8-2024.png"/>
+            <div class="btext">
+                <p>At Brickwell, we're more than just a LEGO set store - we're enthusiasts, builders, and dreamers. We curate the latest and most 
+                exciting LEGO sets, ensuring that every product we offer sparks creativity and imagination. Whether you're a seasoned builder 
+                or just starting, Brickwell is your ultimate destination for all things LEGO.</p>
+            </div>
+        </div>
+        <div class="footer-links1">
+        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="About">About Us</a></div>
+        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="">Log in</a></div>
+        <div style="margin-bottom: 20px"><a asp-area="" asp-controller="Home" asp-action="Products">Start shopping</a></div>
+        </div>
+        <div class="footer-links">
+            <div>© 2024 Brickwell, Inc.</div>
+            <div><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></div>
+            <div><a asp-area="" asp-controller="Home" asp-action="Privacy">Terms & Conditions</a></div>
+        </div>
+        <img class="lego-border" src="~/images/legoborder1.png"/>
+    </div>
+</footer>
+
+@* <script src="~/lib/jquery/dist/jquery.min.js"></script> *@
+<script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/bootstrap/js/tiny-slider.js"></script>
+<script src="~/bootstrap/js/custom.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>

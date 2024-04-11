@@ -1,49 +1,128 @@
 ﻿@page
 @model brickwell2.Pages.CartModel
 @{
+  ViewData["Title"] = "Cart";
 }
-
-<h2>Your cart</h2>
-
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th class="text-right">Price</th>
-            <th class="text-right">Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
-        {
-            <tr>
-                <td class="text-left">@l.Product.Name</td>
-                <td class="text-center">@l.Quantity</td>
-                <td class="text-right">@l.Product.Price</td>
-                <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td>
+<div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
+	<h1 style="font-size: 60px;">Your Cart</h1>
+</div>
+@*     <tbody> *@
+@*         @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>()) *@
+@*         { *@
+@*             <tr> *@
+@*                 <td class="text-left">@l.Product.Name</td> *@
+@*                 <td class="text-center">@l.Quantity</td> *@
+@*                 <td class="text-right">@l.Product.Price</td> *@
+@*                 <td class="text-right">@((l.Quantity * l.Product.Price).ToString("c"))</td> *@
+@*                 <td class="text-center"> *@
+@*                     <form asp-page-handler="Remove" method="post"> *@
+@*                         <input type="hidden" name="ProductId" value="@l.Product.ProductId" /> *@
+@*                         <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl." /> *@
+@*                         <button type="submit" class="btn btn-sm btn btn-danger"> *@
+@*                             Remove *@
+@*                         </button> *@
+@*                     </form> *@
+@*                 </td> *@
+@*             </tr> *@
+@*         } *@
+@*     </tbody> *@
+@*     <tfoot> *@
+@*         <tr> *@
+@*             <td colspan="3" class="text-right">Total:</td> *@
+@*             <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td> *@
+@*         </tr> *@
+@*     </tfoot> *@
+@* </table> *@
+@* <div class="text-center"> *@
+@*   <a class="btn btn-primary" href="@Model.ReturnUrl">Back</a> *@
+@* </div> *@
+@* <br><br><br><br><br> ewrklfwfrf.ldkscm;adjvoiajdvoijdovijafkvadfdsklfmwfkvmklefvekfvpoekpveopfkvpkoefvknv;lkdafnv'kadmfv'pkaldmf'vkl*@
+<div class="untree_co-section before-footer-section">
+  <div class="container">
+    <div class="row mb-5">
+      <form class="col-md-12" method="post">
+        <div class="site-blocks-table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="product-thumbnail">Image</th>
+                <th class="product-name">Product</th>
+                <th class="product-price">Price</th>
+                <th class="product-quantity">Quantity</th>
+                <th class="product-total">Total</th>
+                <th class="product-remove">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>())
+            {
+              <tr>
+                <td><img src="@l.Product.ImgLink" alt="@l.Product.Name" style="height: 150px; width: auto;" /></td>
+                <td class="product-name"><h2 class="h5 text-black">@l.Product.Name</h2></td>
+                <td>@l.Product.Price</td>
+                <td class="">@l.Quantity</td>
+                <td>@((l.Quantity * l.Product.Price).ToString("c"))</td>
+                @* <td><a href="#" class="btn btn-black btn-sm">X</a></td> *@
                 <td class="text-center">
-                    <form asp-page-handler="Remove" method="post">
-                        <input type="hidden" name="ProductId" value="@l.Product.ProductId" />
-                        <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl." />
-                        <button type="submit" class="btn btn-sm btn btn-danger">
-                            Remove
-                        </button>
-                    </form>
+                  <form asp-page-handler="Remove" method="post">
+                    <input type="hidden" name="ProductId" value="@l.Product.ProductId"/>
+                    <input type="hidden" name="returnUrl" value="@Model?.ReturnUrl."/>
+                    <button type="submit" class="btn btn-sm btn btn-danger">
+                      X
+                    </button>
+                  </form>
                 </td>
-            </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</td>
-        </tr>
-    </tfoot>
-</table>
+              </tr>
+            }
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
 
-<div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Back</a>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row mb-5">
+          <div class="col-md-6">
+            <a class="btn btn-sm btn-block" style="font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" href="@Model.ReturnUrl">Continue Shopping</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 pl-5">
+        <div class="row justify-content-end">
+          <div class="col-md-7">
+            <div class="row">
+              <div class="col-md-12 text-right border-bottom mb-5">
+                <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <span class="text-black">Subtotal</span>
+              </div>
+              <div class="col-md-6 text-right">
+                @* <strong class="text-black">$230.00</strong> *@
+                <strong class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</strong>
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="col-md-6">
+                <span class="text-black">Total</span>
+              </div>
+              <div class="col-md-6 text-right">
+                @* <strong class="text-black">$230.00</strong> *@
+                <strong class="text-right">@Model.Cart?.CalculateTotal().ToString("c")</strong>
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" onclick="window.location='checkout.html'">Proceed To Checkout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

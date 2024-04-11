@@ -13,11 +13,6 @@
     <link rel="stylesheet" href="~/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/bootstrap/css/style.css"/>
     <link rel="shortcut icon" href="~/favicon.ico">
-
-    @using Microsoft.AspNetCore.Identity
-    @inject SignInManager<IdentityUser> SignInManager
-    @inject UserManager<IdentityUser> UserManager
-
 </head>
 
 
@@ -39,34 +34,16 @@
                 <li class="nav-item @(Context.Request.Path == "/Home/About" ? "active" : "")">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
-                <li>
+                @{
+                    string path = Context.Request.Path;
+                    bool isActive = path.StartsWith("/Cart");
+                }
+                <li class="nav-item @(isActive ? "active" : "")">
                     <vc:cart-summary/>
                 </li>
                 <li class="nav-item @(Context.Request.Path == "/Identity/Account/Login" ? "active" : "")">
                     <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><img src="~/images/legohead.png" style="width: 48px;"></a>
                 </li>
-                <ul class="navbar-nav">
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                        </li>
-                    }
-                </ul>
             </ul>
 
         </div>
@@ -75,26 +52,6 @@
 <body>
 <div>@RenderBody()</div>
 
-<!-- Start Footer Section -->
-@* <footer class="footer"> *@
-@*     <div style="width: 100%; height: 737px; position: relative"> *@
-@*         <div style="width: 100%; height: 473px; left: 0px; bottom: 0px; position: absolute; background: #FFF6C9"></div> *@
-@*         <img style="width: 100%; left: 0px; bottom: 0px; position: absolute" src="~/images/legoborder1.png"/> *@
-@*         <img style="width: 350px; left: 140px; top: 130px; position: absolute" src="~/images/legoguy2.png"/> *@
-@*         <img style="width: 540px; left: 745px; top: 205px; position: absolute" src="~/images/BRICKWELL-4-8-2024.png"/> *@
-@*         <div style="width: 556px; height: 186px; left: 775px; top: 394px; position: absolute; text-align: right; color: #484848; font-size: 20px; font-weight: 400; line-height: 25px; word-wrap: break-word">At Brickwell, we're more than just a LEGO set store - we're enthusiasts, builders, and dreamers. We curate the latest and most exciting LEGO sets, ensuring that every product we offer sparks creativity and imagination. Whether you're a seasoned builder or just starting, Brickwell is your ultimate destination for all things LEGO.</div> *@
-@*         <div style="left: 483px; bottom: 0px; position: absolute; color: black; font-size: 20px;font-weight: 400; line-height: 25px; word-wrap: break-word; z-index: 10">© 2024 Brickwell, Inc.</div> *@
-@*         <div style="position: absolute; left: calc(50% - 278px); top: 395px; /* Adjust this value as needed */ text-align: center; color: black; font-size: 20px; font-weight: 700; line-height: 25px; word-wrap: break-word"> *@
-@*             <div style="margin-bottom: 5px;"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a></div> *@
-@*             <div style="margin-bottom: 5px;"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="">Log in</a></div> *@
-@*             <div style="margin-bottom: 5px;"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Products">Start shopping</a></div> *@
-@*         </div> *@
-@* *@
-@*         <div style="width: 121px; left: 757px; bottom: 0px; position: absolute; color: black; font-size: 20px;  font-weight: 400; line-height: 25px; word-wrap: break-word; z-index: 10"><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy Policy</a></div> *@
-@* *@
-@*         <div style="width: 174px; left: 974px; bottom: 0px; position: absolute; color: black; font-size: 20px; font-weight: 400; line-height: 25px; word-wrap: break-word; z-index: 10"><a asp-area="" asp-controller="Home" asp-action="Privacy">Terms & Conditions</a></div> *@
-@*     </div> *@
-@* </footer> *@
 <footer class="footer">
     <div class="footer-content">
         <div class="main-color-bg">
