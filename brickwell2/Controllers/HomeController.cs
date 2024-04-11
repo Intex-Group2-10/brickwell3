@@ -55,28 +55,58 @@ namespace brickwell2.Controllers
             return View(viewUsers);
         }
 
+        //public IActionResult Products(int pageNum, string? productCategory)
+        //{
+        //    int pageSize = 3;
+
+        //    var productObject = new PaginationListViewModel
+        //    {
+        //        Products = _repo.Products
+        //            .Where(x => x.Category == productCategory || productCategory == null)
+        //            .OrderBy(x => x.Name)
+        //            .Skip((pageNum - 1) * pageSize)
+        //            .Take(pageSize),
+
+        //        PaginationInfo = new PaginationInfo
+        //        {
+        //            CurrentPage = pageNum,
+        //            ProductsPerPage = pageSize,
+        //            TotalProducts = productCategory == null ? _repo.Products.Count() : _repo.Products.Where(x => x.Category == productCategory).Count()
+        //        },
+
+        //    };
+        //    return View(productObject);
+        //}
+
         public IActionResult Products(int pageNum, string? productCategory)
         {
             int pageSize = 3;
 
+            // Ensure pageNum is at least 1
+            pageNum = Math.Max(pageNum, 1);
+
+            var productQuery = _repo.Products
+                                .Where(x => x.Category == productCategory || productCategory == null)
+                                .OrderBy(x => x.Name);
+
             var productObject = new PaginationListViewModel
             {
-                Products = _repo.Products
-                    .Where(x => x.Category == productCategory || productCategory == null)
-                    .OrderBy(x => x.Name)
-                    .Skip((pageNum - 1) * pageSize)
-                    .Take(pageSize),
+                Products = productQuery
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize),
 
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ProductsPerPage = pageSize,
-                    TotalProducts = productCategory == null ? _repo.Products.Count() : _repo.Products.Where(x => x.Category == productCategory).Count()
+                    TotalProducts = productCategory == null
+                                     ? productQuery.Count()
+                                     : productQuery.Where(x => x.Category == productCategory).Count()
                 },
-
             };
             return View(productObject);
         }
-        
+
+
     }
 }

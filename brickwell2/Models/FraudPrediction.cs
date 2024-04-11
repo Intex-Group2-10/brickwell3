@@ -1,38 +1,61 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
 namespace brickwell2.Models;
 
-public class FraudPrediction
+public partial class FraudPrediction
 {
-    [Key] 
-    public int transaction_ID { get; set; }
-    public int time {get; set;}
-    public int amount {get; set;}
-    public int day_of_week_Mon {get; set;}
-    public int day_of_week_Sat {get; set;}
-    public int day_of_week_Sun {get; set;}
-    public int day_of_week_Thu {get; set;}
-    public int day_of_week_Tue {get; set;}
-    public int day_of_week_Wed {get; set;}
-    public int entry_mode_PIN {get; set;}
-    public int entry_mode_Tap {get; set;}
-    public int type_of_transaction_Online {get; set;}
-    public int type_of_transaction_POS {get; set;}
-    public int country_of_transaction_India {get; set;}
-    public int country_of_transaction_Russia {get; set;}
-    public int country_of_transaction_USA {get; set;}
-    public int country_of_transaction_UnitedKingdom {get; set;}
-    public int shipping_address_India {get; set;}
-    public int shipping_address_Russia {get; set;}
-    public int shipping_address_USA {get; set;}
-    public int shipping_address_UnitedKingdom {get; set;}
-    public int bank_HSBC {get; set;}
-    public int bank_Halifax {get; set;}
-    public int bank_Lloyds {get; set;}
-    public int bank_Metro {get; set;}
-    public int bank_Monzo {get; set;}
-    public int bank_RBS {get; set;}
-    public int type_of_card_Visa {get; set;}
-    public int fraud { get; set; }
+    public int? Time { get; set; }
 
+    public int? Amount { get; set; }
+
+    public int? DayOfWeekMon { get; set; }
+
+    public int? DayOfWeekSat { get; set; }
+
+    public int? DayOfWeekSun { get; set; }
+
+    public int? DayOfWeekThu { get; set; }
+
+    public int? DayOfWeekTue { get; set; }
+
+    public int? DayOfWeekWed { get; set; }
+
+    public int? EntryModePin { get; set; }
+
+    public int? EntryModeTap { get; set; }
+
+    public int? TypeOfTransactionOnline { get; set; }
+
+    public int? TypeOfTransactionPos { get; set; }
+
+    public int? CountryOfTransactionIndia { get; set; }
+
+    public int? CountryOfTransactionRussia { get; set; }
+
+    public int? CountryOfTransactionUsa { get; set; }
+
+    public int? CountryOfTransactionUnitedKingdom { get; set; }
+
+    public int? ShippingAddressIndia { get; set; }
+
+    public int? ShippingAddressRussia { get; set; }
+
+    public int? ShippingAddressUsa { get; set; }
+
+    public int? ShippingAddressUnitedKingdom { get; set; }
+
+    public int? BankHsbc { get; set; }
+
+    public int? BankHalifax { get; set; }
+
+    public int? BankLloyds { get; set; }
+
+    public int? BankMetro { get; set; }
+
+    public int? BankMonzo { get; set; }
+
+    public int? BankRbs { get; set; }
+
+    public int? TypeOfCardVisa { get; set; }
 }

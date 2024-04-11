@@ -5,7 +5,7 @@ namespace brickwell2.Models;
 
 public partial class Order
 {
-    public int? TransactionId { get; set; }
+    public int TransactionId { get; set; }
 
     public int? CustomerId { get; set; }
 

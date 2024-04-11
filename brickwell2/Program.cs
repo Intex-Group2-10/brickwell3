@@ -23,7 +23,8 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 builder.Services.AddDbContext<LegoDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
+    //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:LegoConnection"]);
 });
 
 builder.Services.AddDbContext<LegoSecurityContext>(options =>
