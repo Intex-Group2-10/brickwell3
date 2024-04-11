@@ -74,6 +74,13 @@ namespace brickwell2.Controllers
             return View(viewModel);
         }
 
+        // public IActionResult ProductCart(int id)
+        // {
+        //     var productToDisplay = _repo.Products
+        //         .Single(x => x.ProductId == id);
+        //     return View("ProductDetail");
+        // }
+
         public IActionResult Test()
         {
             var viewUsers = _securityRepository.AspNetUsers.ToList();

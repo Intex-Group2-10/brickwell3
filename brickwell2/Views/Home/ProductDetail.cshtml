@@ -24,22 +24,27 @@
         <p><b>Number of parts:</b> @Model.Product.NumParts</p>
         <p><b>Category:</b> @Model.Product.Category</p>
         <form id=@Model.Product.ProductId method="post" asp-page="/Cart">
-           <input type="hidden" asp-for="Product.ProductId" />
-           <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-           <button class="add-to-cart" type="submit">Add to Cart</button>
+            <input type="hidden" asp-for="Product.ProductId" />
+            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+            <button class="add-to-cart" type="submit">Add to Cart</button>
         </form>
-
-        @* <form id=@Model.ProductId method="post" asp-page="/Cart"> *@
-                    @*     <input type="hidden" asp-for="ProductId"/> *@
-                    @*     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/> *@
-                    @*     <button type="submit" style="background-color: transparent; border: none;"> *@
-                    @*         <img src="~/images/cross.svg" alt="plus" class="img-fluid"> *@
-                    @*     </button> *@
-                    @* </form> *@
-              
+        @* <a class="product-item" asp-controller="Home" asp-action="ProductCart" asp-route-id="@Model.Product.ProductId"> *@
+        @*         <input type="hidden" asp-for="@Model.Product.ProductId"> *@
+        @*          *@
+        @*         <span class="icon-cross"> *@
+        @*             <form id=@Model.Product.ProductId method="post" asp-page="/Cart"> *@
+        @*                 <input type="hidden" asp-for="Product.ProductId"/> *@
+        @*                 <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/> *@
+        @*                 <button type="submit"> *@
+        @*                     <img src="~/images/cross.svg" alt="plus" class="img-fluid"> *@
+        @*                 </button> *@
+        @*             </form> *@
+        @*         </span> *@
+        @*     </a> *@
+         
+        
         <div class="border p-3 mb-3">
           <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">View Product Description</a></h3>
-
           <div class="collapse" id="collapsebank">
         	<div class="py-2">
                 <p class="mb-0">@Model.Product.Description</p>
