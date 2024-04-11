@@ -29,7 +29,8 @@ builder.Services.AddDbContext<LegoDbContext>(options =>
 
 builder.Services.AddDbContext<LegoSecurityContext>(options =>
 {
-    options.UseSqlite(builder.Configuration["ConnectionStrings:LegoSecurityConnection"]);
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:LegoConnection"]);
+    //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoSecurityConnection"]);
 });
 
 services.AddAuthentication().AddGoogle(googleOptions =>
