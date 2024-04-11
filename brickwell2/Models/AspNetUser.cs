@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace brickwell2.Models;
 
 public partial class AspNetUser
 {
+    [Key]
     public string Id { get; set; } = null!;
 
     public string? UserName { get; set; }

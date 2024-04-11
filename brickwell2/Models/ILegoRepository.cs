@@ -5,7 +5,8 @@
 		public IQueryable<Customer> Customers { get; }
 		public IQueryable<LineItem> LineItems { get; }
 		public IQueryable<Order> Orders { get; }
-		public IQueryable<Product> Products { get; }	
+		public IQueryable<Product> Products { get; }
+		public IEnumerable<ItemBasedRecommendation> ItemBasedRecommendations { get; }
 		public void AddProduct(Product product);
 		public void EditProduct(Product product);
 		public void DeleteProduct(Product product);

@@ -39,25 +39,40 @@ public class AdminController : Controller
     //    };
     //    return View(product);
     //}
+    
     [HttpGet]
-    public IActionResult AddProduct()
+    public IActionResult AddProduct(int id)
     {
-        return View("AdminProducts", model: new Product());
+        var newProduct = new Product();
+        return View(newProduct);
     }
     
     [HttpPost]
     public IActionResult AddProduct(Product response)
     {
-        if (ModelState.IsValid)
-        {
-            _repo.AddProduct(response);
-            return View("AdminProducts", response);
-        }
-        else
-        {
-            return View(response);
-        }
+        
+        _repo.AddProduct(response);
+
+        return RedirectToAction("AdminProducts");
     }
+    
+    
+    [HttpGet]
+    public IActionResult AddUser(int id)
+    {
+        var newUser = new AspNetUser();
+        return View(newUser);
+    }
+    
+    [HttpPost]
+    public IActionResult AddUser(AspNetUser user)
+    {
+        _securityRepo.AddUser(user);
+
+        return RedirectToAction("AdminUsers");
+    }
+    
+    
 
     public IActionResult AdminProducts(int pageNum)
     {
@@ -129,7 +144,7 @@ public class AdminController : Controller
             {
                 CurrentPage = pageNum,
                 ProductsPerPage = pageSize,
-                TotalProducts = orderQuery.Count() // Count of all orders where fraud equals 1
+                TotalProducts = orderQuery.Where(x => x.Fraud == 1).Count() // Count of all orders where fraud equals 1
             }
         };
 
@@ -195,22 +210,30 @@ public class AdminController : Controller
     public IActionResult AdminUsers(int pageNum)
     {
         int pageSize = 10;
+
+        // Ensure pageNum is at least 1
+        pageNum = Math.Max(pageNum, 1);
+
+        var userQuery = _securityRepo.AspNetUsers
+                          .OrderBy(x => x.UserName);
+
         var user = new PaginationListViewModel
         {
-            AspNetUsers = _securityRepo.AspNetUsers
-                .OrderBy(x => x.UserName)
-                .Skip((pageNum - 1) * pageSize)
-                .Take(pageSize),
+            AspNetUsers = userQuery
+                            .Skip((pageNum - 1) * pageSize)
+                            .Take(pageSize), // No ToList() since we want an IQueryable
 
             PaginationInfo = new PaginationInfo
             {
                 CurrentPage = pageNum,
-                ProductsPerPage = pageSize,
-                TotalProducts = _securityRepo.AspNetUsers.Count()
+                ProductsPerPage = pageSize, // Renamed to ItemsPerPage for clarity
+                TotalProducts = userQuery.Count() // Use the count of userQuery
             }
         };
+
         return View(user);
     }
+
     //}
 
     [HttpGet]
@@ -243,4 +266,25 @@ public class AdminController : Controller
         _securityRepo.DeleteUser(user);
         return RedirectToAction("AdminUsers");
     }
+    
+    public class UserController : Controller
+    {
+        public IActionResult CreateUser()
+        {
+            string uniqueId = GenerateUniqueId.UniqueIdGenerator();
+            // Use the uniqueId to create a new user
+            // For example:
+            // var newUser = new User { UserId = uniqueId, ... };
+            // _repo.Add(newUser);
+            // _repo.SaveChanges();
+
+            return View(uniqueId);
+        }
+    }
+
+    public IActionResult RegisterUserModel()
+    {
+        return View();
+    }
+
 }

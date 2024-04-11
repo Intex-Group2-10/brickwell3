@@ -46,9 +46,32 @@ namespace brickwell2.Controllers
         [HttpGet]
         public IActionResult ProductDetail(int id)
         {
-            var productToDisplay = _repo.Products
-                .Single(x => x.ProductId == id);
-            return View(productToDisplay);
+            var productToDisplay = _repo.Products.Single(x => x.ProductId == id);
+
+            // Retrieve recommendations for the product
+            var recommendations = _repo.ItemBasedRecommendations
+                .Where(r => r.ProductId == id)
+                .FirstOrDefault(); // Assuming there's only one row for recommendations for each product
+
+            // Fetch details for each recommendation
+            ViewBag.Recommendation1 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation1);
+            ViewBag.Recommendation2 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation2);
+            ViewBag.Recommendation3 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation3);
+            ViewBag.Recommendation4 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation4);
+            ViewBag.Recommendation5 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation5);
+            ViewBag.Recommendation6 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation6);
+            ViewBag.Recommendation7 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation7);
+            ViewBag.Recommendation8 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation8);
+            ViewBag.Recommendation9 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation9);
+            ViewBag.Recommendation10 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation10);
+            // Similarly fetch and store details for Recommendation3 to Recommendation10
+
+            var viewModel = new ItemRecommendationViewModel
+            {
+                Product = productToDisplay
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Test()
