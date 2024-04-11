@@ -4,6 +4,7 @@ using brickwell2.Models;
 using System;
 using System.Diagnostics;
 using brickwell2.Models.ViewModels;
+using SQLitePCL;
 
 namespace brickwell2.Controllers;
 
@@ -16,11 +17,6 @@ public class AdminController : Controller
     {
         _repo = legoInfo;
         _securityRepo = secureInfo;
-    }
-    public IActionResult AdminOrders()
-    {
-        var viewOrders = _repo.Orders.ToList();
-        return View(viewOrders);
     }
 
     public IActionResult AdminProducts(int pageNum)
@@ -43,11 +39,36 @@ public class AdminController : Controller
         return View(product);
     }
     
-    [HttpGet]
-    public IActionResult EditProduct ()
+    public IActionResult AdminOrders(int pageNum)
     {
-        ViewBag.categories = _repo.Products.ToList();
-        return View("AdminUsers");
+        int pageSize = 150;
+        var order = new PaginationListViewModel
+        {
+            Orders = _repo.Orders
+                .Where(x => x.Fraud == 1) // Filter orders where fraud equals 1
+                .OrderByDescending(x => x.TransactionId) // Order by TransactionId (most recent first)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize),
+
+            PaginationInfo = new PaginationInfo
+            {
+                CurrentPage = pageNum,
+                ProductsPerPage = pageSize,
+                TotalProducts = _repo.Orders.Where(x => x.Fraud == 1).Count() // Count of all orders (including those where fraud != 1)
+            }
+        };
+        return View(order);
+    }
+    
+    [HttpGet]
+    public IActionResult EditProduct (int id)
+    {
+        var recordToEdit = _repo.Products
+            .Single(x => x.ProductId == id);
+
+        return View("AdminUsers", recordToEdit);
+        // ViewBag.categories = _repo.Products.ToList();
+        // return View("AdminUsers");
     }
     
     [HttpPost]
@@ -69,7 +90,7 @@ public class AdminController : Controller
     [HttpPost]
     public IActionResult DeleteProduct (Models.Customer deleteInfo)
     {
-        _repo.DeleteCustomer(deleteInfo);
+        // _repo.DeleteCustomer(deleteInfo);
 
         return RedirectToAction("AdminUsers");
     }
@@ -95,29 +116,33 @@ public class AdminController : Controller
     }
     
     [HttpGet]
-    public IActionResult EditCustomer ()
+    public IActionResult EditUser (string id)
     {
-        ViewBag.categories = _repo.Customers.ToList();
-        return View("AdminUsers");
+        var recordToEdit = _securityRepo.AspNetUsers
+            .Single(x => x.Id == id);
+        // ViewBag.users = _repo.Users.ToList();
+        return View(recordToEdit);
     }
     
     [HttpPost]
-    public IActionResult EditCustomer (Models.Customer customer)
+    public IActionResult EditUser(Models.AspNetUser user)
     {
+        _securityRepo.EditUser(user);
+        // _securityRepo.SaveChanges();
             return RedirectToAction("AdminUsers");
     }
     
     [HttpGet]
-    public IActionResult DeleteCustomer(int id)
+    public IActionResult DeleteUser(string id)
     {
-        var recordToDelete = _repo.Customers
-            .Single(x => x.CustomerId == id);
+        var recordToDelete = _securityRepo.AspNetUsers
+            .Single(x => x.Id == id);
 
         return View(recordToDelete);
     }
 
     [HttpPost]
-    public IActionResult DeleteCustomer (Models.Customer deleteInfo)
+    public IActionResult DeleteUser (Models.AspNetUser deleteInfo)
     {
         return RedirectToAction("AdminUsers");
     }

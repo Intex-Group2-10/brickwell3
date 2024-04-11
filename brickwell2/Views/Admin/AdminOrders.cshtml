@@ -1,4 +1,4 @@
-@model List<Order>
+@model PaginationListViewModel
 @{
     Layout = "_AdminLayout";
 }
@@ -27,7 +27,7 @@
     </tr>
         
     </thead>
-        @foreach (var x in Model.Where(x => x.Fraud == 1))
+    @foreach (var x in Model.Orders.Where(x => x.Fraud == 1).OrderByDescending(x => x.Date))
     {
         <tbody>
         <tr>
@@ -43,10 +43,9 @@
             <td>@x.Bank</td>
             <td>@x.TypeOfCard</td>
             <td>@x.Fraud</td>
-            @* <td><a class="btn btn-info" asp-controller="Admin" asp-action="Edit" asp-route-id="@x.CustomerId">Edit</a></td> *@
-            @* <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteCustomer" asp-route-id="@x.CustomerId">Delete</a></td> *@
         </tr>
 
         </tbody>
     }
 </table>
+<div page-model="@Model.PaginationInfo" page-action="AdminOrders"></div>
