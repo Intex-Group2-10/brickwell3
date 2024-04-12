@@ -6,7 +6,7 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
-@model Product
+@model List<Product>
 
 
 <div style="width: 100vw; height: 506px; position: relative">
@@ -39,67 +39,66 @@
                 </div>
             </div>
 			<!-- End Column 1 -->
+			
+				<!-- Start Column 2 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="27">
+						<img src="~/images/27_peacock.webp" class="img-fluid product-thumbnail">
+						<h3 class="product-title">Exotic Peacock</h3>
+						<strong class="product-price">$20.00</strong>
+						<span class="icon-cross">
+							<form method="post" asp-page="/Cart">
+								<input type="hidden" name="ProductId" value="27"/>
+								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+								<button type="submit" style="background-color: transparent; border: none;">
+									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+								</button>
+							</form>
 
-			<!-- Start Column 2 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="27">
-					<img src="~/images/27_peacock.webp" class="img-fluid product-thumbnail">
-					<h3 class="product-title">Exotic Peacock</h3>
-					<strong class="product-price">$20.00</strong>
-					<span class="icon-cross">
-                        <form method="post" asp-page="/Cart">
-                            <input type="hidden" name="ProductId" value="27" />
-                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                            <button type="submit" style="background-color: transparent; border: none;">
-                                <img src="~/images/cross.svg" alt="plus" class="img-fluid">
-                            </button>
-                        </form>
+						</span>
+					</a>
+				</div>
+				<!-- End Column 2 -->
 
-                    </span>
-				</a>
-			</div> 
-			<!-- End Column 2 -->
+				<!-- Start Column 3 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="33">
+						<img src="~/images/33_astronaut.webp" class="img-fluid product-thumbnail">
+						<h3 class="product-title">Space Astronaut</h3>
+						<strong class="product-price">$55.00</strong>
+						<span class="icon-cross">
+							<form method="post" asp-page="/Cart">
+								<input type="hidden" name="ProductId" value="33"/>
+								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+								<button type="submit" style="background-color: transparent; border: none;">
+									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+								</button>
+							</form>
 
-			<!-- Start Column 3 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="33">
-					<img src="~/images/33_astronaut.webp" class="img-fluid product-thumbnail">
-					<h3 class="product-title">Space Astronaut</h3>
-					<strong class="product-price">$55.00</strong>
-					<span class="icon-cross">
-                        <form method="post" asp-page="/Cart">
-                            <input type="hidden" name="ProductId" value="33" />
-                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                            <button type="submit" style="background-color: transparent; border: none;">
-                                <img src="~/images/cross.svg" alt="plus" class="img-fluid">
-                            </button>
-                        </form>
+						</span>
+					</a>
+				</div>
+				<!-- End Column 3 -->
 
-                    </span>
-				</a>
-			</div>
-			<!-- End Column 3 -->
+				<!-- Start Column 4 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="34">
+						<img src="~/images/34_uphouse.webp" class="img-fluid product-thumbnail">
+						<h3 class="product-title">"Up" House</h3>
+						<strong class="product-price">$60.00</strong>
+						<span class="icon-cross">
+							<form method="post" asp-page="/Cart">
+								<input type="hidden" name="ProductId" value="34"/>
+								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+								<button type="submit" style="background-color: transparent; border: none;">
+									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+								</button>
+							</form>
 
-			<!-- Start Column 4 -->
-			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="34">
-					<img src="~/images/34_uphouse.webp" class="img-fluid product-thumbnail">
-					<h3 class="product-title">"Up" House</h3>
-					<strong class="product-price">$60.00</strong>
-					<span class="icon-cross">
-                        <form method="post" asp-page="/Cart">
-                            <input type="hidden" name="ProductId" value="34" />
-                            <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
-                            <button type="submit" style="background-color: transparent; border: none;">
-                                <img src="~/images/cross.svg" alt="plus" class="img-fluid">
-                            </button>
-                        </form>
-
-                    </span>
-				</a>
-			</div>
-			<!-- End Column 4 -->
-
+						</span>
+					</a>
+				</div>
+				<!-- End Column 4 -->
 		</div>
 	</div>
 </div>

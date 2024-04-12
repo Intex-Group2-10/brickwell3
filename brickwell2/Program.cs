@@ -83,6 +83,21 @@ namespace brickwell2
             {
                 options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
             });
+        services.Configure<IdentityOptions>(options =>
+        {
+            // Default Password settings.
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequiredLength = 12;
+            options.Password.RequiredUniqueChars = 3;
+        });
+        services.AddDbContext<LegoDbContext>(options =>
+        {
+            //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
+            options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+        });
 
             services.AddDbContext<LegoSecurityContext>(options =>
             {

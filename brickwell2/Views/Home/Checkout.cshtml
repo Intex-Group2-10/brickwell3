@@ -2,7 +2,7 @@
  @{ 
      ViewData["Title"] = "Checkout"; 
  } 
- @model FraudPrediction 
+@model brickwell2.Pages.CheckoutModel
  
  <div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;"> 
      <h1 style="font-size: 60px;">Checkout</h1> 
@@ -32,10 +32,11 @@
                @* <option value="UnitedKingdom">United Kingdom</option>  *@
              </select> 
            </div> 
-           <input type="hidden" asp-for="CountryOfTransactionIndia" id="countryTransactionIndia" value="0" /> 
-           <input type="hidden" asp-for="CountryOfTransactionRussia" id="countryTransactionRussia" value="0" /> 
-           <input type="hidden" asp-for="CountryOfTransactionUsa" id="countryTransactionUSA" value="0" /> 
            @* <input type="hidden" asp-for="CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" />  *@
+           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionIndia" id="countryTransactionIndia" value="0" /> 
+           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionRussia" id="countryTransactionRussia" value="0" /> 
+           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionUsa" id="countryTransactionUSA" value="0" /> 
+           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" /> 
            
            <div class="form-group row"> 
              <div class="col-md-6"> 
@@ -62,12 +63,12 @@
                  <option value="RBS">RBS</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="BankHsbc" id="bankHSBC" value="0" /> 
-             <input type="hidden" asp-for="BankHalifax" id="bankHalifax" value="0" /> 
-             <input type="hidden" asp-for="BankLloyds" id="bankLloyds" value="0" /> 
-             <input type="hidden" asp-for="BankMetro" id="bankMetro" value="0" /> 
-             <input type="hidden" asp-for="BankMonzo" id="bankMonzo" value="0" /> 
-             <input type="hidden" asp-for="BankRbs" id="bankRBS" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankHsbc" id="bankHSBC" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankHalifax" id="bankHalifax" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankLloyds" id="bankLloyds" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankMetro" id="bankMetro" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankMonzo" id="bankMonzo" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.BankRbs" id="bankRBS" value="0" /> 
       
              <div class="col-md-6"> 
                <label for="cardType" class="text-black">Type of Card <span class="text-danger">*</span></label> 
@@ -77,7 +78,7 @@
                  <option value="Visa">Visa</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="TypeOfCardVisa" id="typeofcardVisa" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfCardVisa" id="typeofcardVisa" value="0" /> 
            </div> 
             
             
@@ -93,8 +94,8 @@
                  <option value="POS">POS</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="TypeOfTransactionOnline" id="transactionTypeOnline" value="0" /> 
-             <input type="hidden" asp-for="TypeOfTransactionPos" id="transactionTypePOS" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfTransactionOnline" id="transactionTypeOnline" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfTransactionPos" id="transactionTypePOS" value="0" /> 
  
              <div class="col-md-6"> 
                <label for="entryMode" class="text-black">Entry Mode <span class="text-danger">*</span></label> 
@@ -105,8 +106,8 @@
                  <option value="Tap">Tap</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="EntryModePin" id="entryModePIN" value="0" /> 
-             <input type="hidden" asp-for="EntryModeTap" id="entryModeTap" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.EntryModePin" id="entryModePIN" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.EntryModeTap" id="entryModeTap" value="0" /> 
  
            </div> 
             
@@ -123,10 +124,10 @@
                  @* <option value="UnitedKingdom">United Kingdom</option>  *@
                </select> 
              </div> 
-             <input type="hidden" asp-for="ShippingAddressIndia" id="shippingAddressIndia" value="0" /> 
-             <input type="hidden" asp-for="ShippingAddressRussia" id="shippingAddressRussia" value="0" /> 
-             <input type="hidden" asp-for="ShippingAddressUsa" id="shippingAddressUSA" value="0" /> 
-             @* <input type="hidden" asp-for="ShippingAddressUnitedKingdom" id="shippingAddressUnitedKingdom" value="0" />  *@
+             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressIndia" id="shippingAddressIndia" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressRussia" id="shippingAddressRussia" value="0" /> 
+             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressUsa" id="shippingAddressUSA" value="0" /> 
+             @* <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressUnitedKingdom" id="shippingAddressUnitedKingdom" value="0" />  *@
            </div> 
             
            <div class="form-group"> 
@@ -152,14 +153,14 @@
                <th>Total</th> 
                </thead> 
                <tbody> 
-               <tr> 
-                 <td>Top Up T-Shirt <strong class="mx-2">x</strong> 1</td> 
-                 <td>$250.00</td> 
-               </tr> 
-               <tr> 
-                 <td>Polo Shirt <strong class="mx-2">x</strong>   1</td> 
-                 <td>$100.00</td> 
-               </tr> 
+                @foreach (var product in Model.Cart)
+                {
+                    <div>
+                        <h3>@product.Name</h3>
+                        <p>@product.Description</p>
+                        <p>$@product.Price</p>
+                    </div>
+                }
                <tr> 
                  <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td> 
                  <td class="text-black">$350.00</td> 
