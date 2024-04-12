@@ -5,7 +5,10 @@ using brickwell2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using System.Drawing.Printing;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace brickwell2.Controllers
 { 
@@ -22,23 +25,8 @@ namespace brickwell2.Controllers
 
         public IActionResult Index()
         {
-        //     string nonce = Nonce();
-        //     ViewBag.Nonce = nonce;
-        //
-        //     string csp = $"default-src 'self'; script-src 'self' 'nonce-{nonce}'; style-src 'self' 'nonce-{nonce}';";
-        //     Response.Headers.Add("Content-Security-Policy", csp);
-         return View();
+            return View();
         }
-        //
-        // private string Nonce()
-        // {
-        //     byte[] nonceBytes = new byte[16];
-        //     using (var rng = new RNGCryptoServiceProvider())
-        //     {
-        //         rng.GetBytes(nonceBytes);
-        //     }
-        //     return Convert.ToBase64String(nonceBytes);
-        // }
 
         public IActionResult Privacy()
         {
@@ -64,11 +52,9 @@ namespace brickwell2.Controllers
         {
             var productToDisplay = _repo.Products.Single(x => x.ProductId == id);
 
-
-            // Retrieve recommendations for the product
             var recommendations = _repo.ItemBasedRecommendations
                 .Where(r => r.ProductId == id)
-                .FirstOrDefault(); // Assuming there's only one row for recommendations for each product
+                .FirstOrDefault();
 
             // Fetch details for each recommendation
             ViewBag.Recommendation1 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation1);
@@ -127,7 +113,7 @@ namespace brickwell2.Controllers
         //    return View(productObject);
         //}
 
-        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor)
+        public IActionResult Products(int pageNum, string? productCategory)
         {
             int pageSize = 6;
 
@@ -149,7 +135,9 @@ namespace brickwell2.Controllers
                 {
                     CurrentPage = pageNum,
                     ProductsPerPage = pageSize,
-                    TotalProducts = productQuery.Count() // Updated to reflect the count of filtered query
+                    TotalProducts = productCategory == null
+                                     ? productQuery.Count()
+                                     : productQuery.Where(x => x.Category == productCategory).Count()
                 },
             };
             return View(productObject);
