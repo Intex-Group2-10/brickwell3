@@ -5,29 +5,50 @@
 @model PaginationListViewModel
 
 <div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;">
-	<h1 style="font-size: 60px;">Shop our Products</h1>
+    <h1 style="font-size: 60px;">Shop our Products</h1>
 </div>
 
 <div class="row">
     <div class="col-3">
         <vc:product-category/>
-		<vc:product-color/>
-	</div>
-<div class="col-md-9" style="padding: 0 5%;">
-	<div class="untree_co-section product-section before-footer-section">
-		<div class="container">
-			<div class="row">
-				@foreach (Product prod in Model.Products)
-				{
-					<partial name="ProductSummary" model="prod" />
-				}
-			</div>
-		</div>
-			<div page-model="@Model.PaginationInfo" page-action="Products" page-class-enabled="true" page-class="btn"
-				 page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-				 page-url-productCategory="@Model.CurrentCategory" class="btn-group pull-right m-1"></div>
-	</div>
-</div>
+        <vc:product-color/>
+    </div>
+    <div class="col-md-9" style="padding: 0 5%;">
+        <div class="untree_co-section product-section before-footer-section">
+            <div class="container">
+
+                <!-- Results per page section -->
+                <div style="display: flex; align-items: center; margin-top: -50px;">
+                    <div></div> <!-- This empty div is used to push the following div to the right -->
+                    <div class="results-per-page" style="order: 2;">
+                        <span>Results per page:</span>
+                        <div class="btn-group" role="group">
+                            @foreach (var size in new[] { 5, 10, 15 })
+                            {
+                                <a class="btn btn-light @(Model.PaginationInfo.ProductsPerPage == size ? "active" : "btn-outline-secondary")"
+                                   asp-controller="Home"
+                                   asp-action="Products"
+                                   asp-route-pageNum="1"
+                                   asp-route-productCategory="@Model.CurrentCategory"
+                                   asp-route-productPrimaryColor="@Model.CurrentColor" 
+                                   asp-route-pageSize="@size">@size</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <br></br>
+                <!-- Product listing -->
+                <div class="row">
+                    @foreach (Product prod in Model.Products)
+                    {
+                        <partial name="ProductSummary" model="prod" />
+                    }
+                </div>
+            </div>
+            <div page-model="@Model.PaginationInfo" page-action="Products" page-class-enabled="true" page-class="btn"
+                 page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+                 page-url-productCategory="@Model.CurrentCategory" class="btn-group pull-right m-1"></div>
+        </div>
+    </div>
 </div>
 <br><br><br><br><br>
-

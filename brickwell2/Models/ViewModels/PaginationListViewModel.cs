@@ -7,5 +7,6 @@
         public IQueryable<Order>? Orders { get; set; }
         public PaginationInfo PaginationInfo { get; set; } = new PaginationInfo(); 
         public string? CurrentCategory { get; set; }
+        public string? CurrentColor { get; set; }
     }
 }
