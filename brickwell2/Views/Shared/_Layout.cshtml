@@ -39,6 +39,16 @@
                 <li class="nav-item @(Context.Request.Path == "/Home/About" ? "active" : "")">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    var user = await UserManager.GetUserAsync(User);
+                    if (await UserManager.IsInRoleAsync(user, "Admin")) // "Admin" is the role you're checking for
+                    {
+                        <li class="nav-item @(Context.Request.Path == "/adminusers" ? "active" : "")">
+                            <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="adminusers">Admin</a>
+                        </li>
+                    }
+                }
                 @{
                     string path = Context.Request.Path;
                     bool isActive = path.StartsWith("/Cart");
@@ -52,20 +62,18 @@
                 <ul class="navbar-nav">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                <button type="submit" class="nav-link text-dark">Logout</button>
-                            </form>
-                        </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                        </li>
+                        var user = await UserManager.GetUserAsync(User);
+                        if (await UserManager.IsInRoleAsync(user, "Admin")) // "Admin" is the role you're checking for
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+                            </li>
+                            <li class="nav-item">
+                                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button type="submit" class="nav-link text-dark">Logout</button>
+                                </form>
+                            </li>
+                        }
                     }
                 </ul>
             </ul>
@@ -76,7 +84,6 @@
 <body>
 
 <div>
-    <partial name="_CookieConsentPartial"/>
     @RenderBody()
 </div>
 </body>

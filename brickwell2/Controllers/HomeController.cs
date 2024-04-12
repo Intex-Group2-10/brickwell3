@@ -32,12 +32,40 @@ namespace brickwell2.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+		public async Task<IActionResult> Index()
+		{
+			//List<Product> productsToDisplay = new List<Product>();
+			//if (User.Identity.IsAuthenticated)
+			//{
+			var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+			var userExists = await _repo.UserCusts.AnyAsync(u => u.UserId == userId);
 
-        public IActionResult Privacy()
+			// Use the result in an if statement
+			if (userExists)
+			{
+				// Code to execute if the user ID exists in the UserCust table
+				var custid = await _repo.UserCusts.Where(u => u.UserId == userId).Select(u => u.CustomerId).FirstOrDefaultAsync();
+				var transid = await _repo.Orders.Where(u => u.CustomerId == custid).Select(u => u.TransactionId).FirstOrDefaultAsync();
+				var prodid = await _repo.LineItems.Where(u => u.TransactionId == transid).Select(u => u.ProductId).FirstOrDefaultAsync();
+
+				var recommendation = _repo.UserBasedRecommendations
+					.Where(r => r.ProductId == prodid)
+					.FirstOrDefault();
+
+				// Fetch details for each recommendation
+				ViewBag.Recommendation1 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct1);
+				ViewBag.Recommendation2 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct2);
+				ViewBag.Recommendation3 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct3);
+
+				var viewModel = new UserRecommendationViewModel();
+
+				return View(viewModel);
+
+			}
+			return View();
+		}
+
+		public IActionResult Privacy()
         {
             return View();
         }
@@ -148,32 +176,35 @@ namespace brickwell2.Controllers
         //    return View(productObject);
         //}
 
-        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor)
+        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor, int pageSize)
         {
-            int pageSize = 6;
-
+            pageSize = Math.Clamp(pageSize, 5, 20);
+        
             // Ensure pageNum is at least 1
             pageNum = Math.Max(pageNum, 1);
-
+        
             var productQuery = _repo.Products
-                                    .Where(x => (x.Category == productCategory || productCategory == null)
-                                                && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
-                                    .OrderBy(x => x.Name);
-
+                .Where(x => (x.Category == productCategory || productCategory == null)
+                            && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
+                .OrderBy(x => x.Name);
+        
             var productObject = new PaginationListViewModel
             {
                 Products = productQuery
-                            .Skip((pageNum - 1) * pageSize)
-                            .Take(pageSize),
-
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
+        
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ProductsPerPage = pageSize,
                     TotalProducts = productCategory == null
-                                     ? productQuery.Count()
-                                     : productQuery.Where(x => x.Category == productCategory).Count()
+                        ? productQuery.Count()
+                        : productQuery.Where(x => x.Category == productCategory).Count()
                 },
+                
+                CurrentCategory = productCategory,
+                CurrentColor = productPrimaryColor
             };
             return View(productObject);
         }
@@ -284,9 +315,7 @@ namespace brickwell2.Controllers
 
                 predictions.Add(new FraudPred() { FraudPrediction = record, Prediction = predictionResult }); // Adds the fraud information and prediction 
             }
-
             
-
             return View(predictions);
         }
 
