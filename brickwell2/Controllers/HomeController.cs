@@ -5,7 +5,10 @@ using brickwell2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using System.Drawing.Printing;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace brickwell2.Controllers
 { 
@@ -22,24 +25,9 @@ namespace brickwell2.Controllers
 
         public IActionResult Index()
         {
-        //     string nonce = Nonce();
-        //     ViewBag.Nonce = nonce;
-        //
-        //     string csp = $"default-src 'self'; script-src 'self' 'nonce-{nonce}'; style-src 'self' 'nonce-{nonce}';";
-        //     Response.Headers.Add("Content-Security-Policy", csp);
-         return View();
+            return View();
         }
-        //
-        // private string Nonce()
-        // {
-        //     byte[] nonceBytes = new byte[16];
-        //     using (var rng = new RNGCryptoServiceProvider())
-        //     {
-        //         rng.GetBytes(nonceBytes);
-        //     }
-        //     return Convert.ToBase64String(nonceBytes);
-        // }
-
+        
         public IActionResult Privacy()
         {
             return View();
@@ -90,7 +78,18 @@ namespace brickwell2.Controllers
 
             return View(viewModel);
         }
-
+        //
+        // [HttpGet]
+        // public IEnumerable<Order> Get(int id)
+        // {
+        //     var orderData = _repo.Orders
+        //         .Where(x => x.CustomerId == id) // Explicitly specify the type argument Customer
+        //         .OrderByDescending(x => x.Date)
+        //         .FirstOrDefault();
+        //
+        //     return orderData;
+        // }
+        
         // public IActionResult ProductCart(int id)
         // {
         //     var productToDisplay = _repo.Products

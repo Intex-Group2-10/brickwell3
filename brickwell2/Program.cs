@@ -32,7 +32,16 @@ public class Program
 
         builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
         builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
-
+        builder.Services.Configure<IdentityOptions>(options =>
+        {
+            // Default Password settings.
+            options.Password.RequireDigit = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.Password.RequireUppercase = true;
+            options.Password.RequiredLength = 12;
+            options.Password.RequiredUniqueChars = 3;
+        });
         builder.Services.AddDbContext<LegoDbContext>(options =>
         {
             //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
@@ -87,6 +96,9 @@ public class Program
         
         app.Use(async (context, next) =>
         {
+            context.Response.Headers.Add("X-XSS-Protection", "1; mode=block");
+            context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            context.Response.Headers.Add("Referrer-Policy", "no-referrer");
             context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com https://live.staticflickr.com; frame-src 'self'; connect-src 'self' http://localhost:* wss://localhost:* ws://localhost:*; style-src-elem 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline';");
             await next();
         });
