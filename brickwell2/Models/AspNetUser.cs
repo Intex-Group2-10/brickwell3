@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace brickwell2.Models;
 
 public partial class AspNetUser
 {
-    [Key]
     public string Id { get; set; } = null!;
 
     public string? UserName { get; set; }
@@ -31,7 +29,7 @@ public partial class AspNetUser
 
     public bool TwoFactorEnabled { get; set; }
 
-    public string? LockoutEnd { get; set; }
+    public DateTimeOffset? LockoutEnd { get; set; }
 
     public bool LockoutEnabled { get; set; }
 
