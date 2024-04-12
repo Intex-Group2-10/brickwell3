@@ -9,6 +9,8 @@ using SQLitePCL;
 using Microsoft.AspNetCore.Authorization;
 
 namespace brickwell2.Controllers;
+
+[Authorize (Roles = "Admin")]
 public class AdminController : Controller
 {
 
