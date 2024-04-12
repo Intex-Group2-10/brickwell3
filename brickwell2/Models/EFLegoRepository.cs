@@ -1,4 +1,6 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
+using brickwell2.Models;
+
 namespace brickwell2.Models
 {
 	public class EFLegoRepository : ILegoRepository
@@ -11,7 +13,6 @@ namespace brickwell2.Models
 		}
 
 		public IQueryable<Customer> Customers => _context.Customers;
-		public IEnumerable<ItemBasedRecommendation> ItemBasedRecommendations => _context.ItemBasedRecommendations;
 
 		public IQueryable<LineItem> LineItems => _context.LineItems;
 
@@ -19,6 +20,9 @@ namespace brickwell2.Models
 
 		public IQueryable<Product> Products => _context.Products;
 		
+		public IEnumerable<ItemBasedRecommendation> ItemBasedRecommendations => _context.ItemBasedRecommendations;
+		
+		public IEnumerable<UserBasedRecommendation> UserBasedRecommendations => _context.UserBasedRecommendations;
 		public void AddUser(AspNetUser adduser)
 		{
 			_context.Add(adduser);
