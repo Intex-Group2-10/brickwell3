@@ -27,7 +27,7 @@ namespace brickwell2.Controllers
         {
             return View();
         }
-        
+
         public IActionResult Privacy()
         {
             return View();
@@ -52,11 +52,9 @@ namespace brickwell2.Controllers
         {
             var productToDisplay = _repo.Products.Single(x => x.ProductId == id);
 
-
-            // Retrieve recommendations for the product
             var recommendations = _repo.ItemBasedRecommendations
                 .Where(r => r.ProductId == id)
-                .FirstOrDefault(); // Assuming there's only one row for recommendations for each product
+                .FirstOrDefault();
 
             // Fetch details for each recommendation
             ViewBag.Recommendation1 = _repo.Products.Single(p => p.ProductId == recommendations.Recommendation1);
@@ -78,18 +76,7 @@ namespace brickwell2.Controllers
 
             return View(viewModel);
         }
-        //
-        // [HttpGet]
-        // public IEnumerable<Order> Get(int id)
-        // {
-        //     var orderData = _repo.Orders
-        //         .Where(x => x.CustomerId == id) // Explicitly specify the type argument Customer
-        //         .OrderByDescending(x => x.Date)
-        //         .FirstOrDefault();
-        //
-        //     return orderData;
-        // }
-        
+
         // public IActionResult ProductCart(int id)
         // {
         //     var productToDisplay = _repo.Products
@@ -134,8 +121,9 @@ namespace brickwell2.Controllers
             pageNum = Math.Max(pageNum, 1);
 
             var productQuery = _repo.Products
-                                .Where(x => x.Category == productCategory || productCategory == null)
-                                .OrderBy(x => x.Name);
+                                    .Where(x => (x.Category == productCategory || productCategory == null)
+                                                && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
+                                    .OrderBy(x => x.Name);
 
             var productObject = new PaginationListViewModel
             {
@@ -154,6 +142,7 @@ namespace brickwell2.Controllers
             };
             return View(productObject);
         }
+
 
 
 
