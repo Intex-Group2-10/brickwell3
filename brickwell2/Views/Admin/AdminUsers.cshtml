@@ -8,33 +8,30 @@
 
 <!--Make the movie list table and bring in data from the Model-->
 
-<table class="table table-bordered">
-
-    <thead class="fw-bold">
-    <tr>
-        <td>User ID</td>
-        <td>Username</td>
-        <td>Email</td>
-        <td>PhoneNumber</td>
-        <td><a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Add User</a></td>
-            @* <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a> *@
-    </tr>
-        
-    </thead>
-    
-    @foreach (var x in Model.AspNetUsers)
-    {
-        <tbody>
-        <tr>
-            <td>@x.Id</td>
-            <td>@x.UserName</td>
-            <td>@x.Email</td>
-            <td>@x.PhoneNumber</td>
-            <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditUser" asp-route-id="@x.Id">Edit</a></td>
-            <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@x.Id">Delete</a></td>
-        </tr>
-        </tbody>
-    }
-    
-</table>
+<div style="padding: 0 20px;"> <!-- Adds horizontal padding -->
+    <table class="table table-bordered">
+        <thead class="fw-bold">
+            <tr>
+                <td>User ID</td>
+                <td>Username</td>
+                <td>Email</td>
+                <td>PhoneNumber</td>
+                <td><a class="btn btn-danger" asp-area="Identity" asp-page="/Account/Register">Add User</a></td>
+            </tr>
+        </thead>
+        @foreach (var x in Model.AspNetUsers)
+        {
+            <tbody>
+                <tr>
+                    <td>@x.Id</td>
+                    <td>@x.UserName</td>
+                    <td>@x.Email</td>
+                    <td>@x.PhoneNumber</td>
+                    <td><a class="btn btn-info" asp-controller="Admin" asp-action="EditUser" asp-route-id="@x.Id">Edit</a></td>
+                    <td><a class="btn btn-danger" asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@x.Id">Delete</a></td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
 <div page-model="@Model.PaginationInfo" page-action="AdminUsers"></div>

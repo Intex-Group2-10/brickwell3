@@ -299,9 +299,7 @@ namespace brickwell2.Controllers
 
                 predictions.Add(new FraudPred() { FraudPrediction = record, Prediction = predictionResult }); // Adds the fraud information and prediction 
             }
-
             
-
             return View(predictions);
         }
 
