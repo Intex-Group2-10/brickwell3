@@ -47,9 +47,13 @@ public partial class LegoDbContext : DbContext
 
         modelBuilder.Entity<FraudPrediction>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("fraud_prediction");
+            entity.HasKey(e => e.TransactionID);
+
+            entity.ToTable("fraud_prediction");
+
+            entity.Property(e => e.TransactionID)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("transaction_ID");
 
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.BankHalifax).HasColumnName("bank_Halifax");
@@ -60,7 +64,7 @@ public partial class LegoDbContext : DbContext
             entity.Property(e => e.BankRbs).HasColumnName("bank_RBS");
             entity.Property(e => e.CountryOfTransactionIndia).HasColumnName("country_of_transaction_India");
             entity.Property(e => e.CountryOfTransactionRussia).HasColumnName("country_of_transaction_Russia");
-            entity.Property(e => e.CountryOfTransactionUnitedKingdom).HasColumnName("country_of_transaction_UnitedKingdom");
+            // entity.Property(e => e.CountryOfTransactionUnitedKingdom).HasColumnName("country_of_transaction_UnitedKingdom");
             entity.Property(e => e.CountryOfTransactionUsa).HasColumnName("country_of_transaction_USA");
             entity.Property(e => e.DayOfWeekMon).HasColumnName("day_of_week_Mon");
             entity.Property(e => e.DayOfWeekSat).HasColumnName("day_of_week_Sat");
@@ -72,7 +76,7 @@ public partial class LegoDbContext : DbContext
             entity.Property(e => e.EntryModeTap).HasColumnName("entry_mode_Tap");
             entity.Property(e => e.ShippingAddressIndia).HasColumnName("shipping_address_India");
             entity.Property(e => e.ShippingAddressRussia).HasColumnName("shipping_address_Russia");
-            entity.Property(e => e.ShippingAddressUnitedKingdom).HasColumnName("shipping_address_UnitedKingdom");
+            // entity.Property(e => e.ShippingAddressUnitedKingdom).HasColumnName("shipping_address_UnitedKingdom");
             entity.Property(e => e.ShippingAddressUsa).HasColumnName("shipping_address_USA");
             entity.Property(e => e.Time).HasColumnName("time");
             entity.Property(e => e.TypeOfCardVisa).HasColumnName("type_of_card_Visa");

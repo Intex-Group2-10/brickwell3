@@ -29,13 +29,13 @@
                <option value="India">India</option> 
                <option value="Russia">Russia</option> 
                <option value="USA">United States of America</option> 
-               <option value="UnitedKingdom">United Kingdom</option> 
+               @* <option value="UnitedKingdom">United Kingdom</option>  *@
              </select> 
            </div> 
            <input type="hidden" asp-for="CountryOfTransactionIndia" id="countryTransactionIndia" value="0" /> 
            <input type="hidden" asp-for="CountryOfTransactionRussia" id="countryTransactionRussia" value="0" /> 
            <input type="hidden" asp-for="CountryOfTransactionUsa" id="countryTransactionUSA" value="0" /> 
-           <input type="hidden" asp-for="CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" /> 
+           @* <input type="hidden" asp-for="CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" />  *@
            
            <div class="form-group row"> 
              <div class="col-md-6"> 
@@ -120,19 +120,20 @@
                  <option value="India">India</option> 
                  <option value="Russia">Russia</option> 
                  <option value="USA">United States of America</option> 
-                 <option value="UnitedKingdom">United Kingdom</option> 
+                 @* <option value="UnitedKingdom">United Kingdom</option>  *@
                </select> 
              </div> 
              <input type="hidden" asp-for="ShippingAddressIndia" id="shippingAddressIndia" value="0" /> 
              <input type="hidden" asp-for="ShippingAddressRussia" id="shippingAddressRussia" value="0" /> 
              <input type="hidden" asp-for="ShippingAddressUsa" id="shippingAddressUSA" value="0" /> 
-             <input type="hidden" asp-for="ShippingAddressUnitedKingdom" id="shippingAddressUnitedKingdom" value="0" /> 
+             @* <input type="hidden" asp-for="ShippingAddressUnitedKingdom" id="shippingAddressUnitedKingdom" value="0" />  *@
            </div> 
             
            <div class="form-group"> 
              <label for="c_order_notes" class="text-black">Order Notes</label> 
              <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea> 
            </div> 
+           <div class="form-group"><input type="submit" value="Submit Order"/></div>
          </form> 
        </div> 
      </div> 
@@ -254,7 +255,7 @@
              document.getElementsByName("CountryOfTransactionIndia")[0].value = 0;
              document.getElementsByName("CountryOfTransactionRussia")[0].value = 0;
              document.getElementsByName("CountryOfTransactionUsa")[0].value = 0;
-             document.getElementsByName("CountryOfTransactionUnitedKingdom")[0].value = 0;
+             // document.getElementsByName("CountryOfTransactionUnitedKingdom")[0].value = 0;
              var selectedCountry = document.getElementById("countryTransaction").value;
  
              // Set the value of the selected country input to 1
@@ -266,7 +267,7 @@
              document.getElementsByName("ShippingAddressIndia")[0].value = 0;
              document.getElementsByName("ShippingAddressRussia")[0].value = 0;
              document.getElementsByName("ShippingAddressUsa")[0].value = 0;
-             document.getElementsByName("ShippingAddressUnitedKingdom")[0].value = 0;
+             // document.getElementsByName("ShippingAddressUnitedKingdom")[0].value = 0;
  
              var selectedAddress = document.getElementById("shippingAddress").value;
  

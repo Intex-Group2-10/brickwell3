@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using System.Drawing.Printing;
 using System.Security.Cryptography;
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
 
 namespace brickwell2.Controllers
 { 
@@ -14,10 +16,16 @@ namespace brickwell2.Controllers
     {
         private ILegoRepository _repo;
         private ILegoSecurityRepository _securityRepository;
-        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp)
+        private readonly LegoDbContext _context;
+        private readonly InferenceSession _session;
+        private readonly ILogger<HomeController> _logger;
+        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp, LegoDbContext context, InferenceSession session, ILogger<HomeController> logger)
         {
             _repo = temp;
             _securityRepository = securetemp;
+            _context = context;
+            _session = session;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -163,5 +171,110 @@ namespace brickwell2.Controllers
             return View();
         }
         
+        [HttpPost]
+        public IActionResult Predict(FraudPrediction fraudPrediction, int time, int amount, int day_of_week_Mon, int day_of_week_Sat, int day_of_week_Sun, int day_of_week_Thu, int day_of_week_Tue, int day_of_week_Wed, int entry_mode_PIN, int entry_mode_Tap, int type_of_transaction_Online, int type_of_transaction_POS, int country_of_transaction_India, int country_of_transaction_Russia, int country_of_transaction_USA, int shipping_address_India, int shipping_address_Russia, int shipping_address_USA, int bank_HSBC, int bank_Halifax, int bank_Lloyds, int bank_Metro, int bank_Monzo, int bank_RBS, int type_of_card_Visa)
+        {
+            // Dictionary mapping the numeric prediction to an animal type
+            var class_type_dict = new Dictionary<int, string>
+            {
+                { 0, "Not Fraudulent" },
+                { 1, "Fraudulent" }
+            };
+
+            try
+            {
+                var input = new List<float> { time, amount, day_of_week_Mon, day_of_week_Sat, day_of_week_Sun, day_of_week_Thu, day_of_week_Tue, day_of_week_Wed, entry_mode_PIN, entry_mode_Tap, type_of_transaction_Online, type_of_transaction_POS, country_of_transaction_India, country_of_transaction_Russia, country_of_transaction_USA, shipping_address_India, shipping_address_Russia, shipping_address_USA, bank_HSBC, bank_Halifax, bank_Lloyds, bank_Metro, bank_Monzo, bank_RBS, type_of_card_Visa  };
+                var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+
+                var inputs = new List<NamedOnnxValue>
+                {
+                    NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+                };
+
+                using (var results = _session.Run(inputs)) // makes the prediction with the inputs from the form (i.e. class_type 1-7)
+                {
+                    var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+                    if (prediction != null && prediction.Length > 0)
+                    {
+                        // Use the prediction to get the animal type from the dictionary
+                        var fraudType = class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown");
+                        ViewBag.Prediction = fraudType;
+                    }
+                    else
+                    {
+                        ViewBag.Prediction = "Error: Unable to make a prediction.";
+                    }
+                }
+
+                _logger.LogInformation("Prediction executed successfully.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error during prediction: {ex.Message}");
+                ViewBag.Prediction = "Error during prediction.";
+            }
+            if (ModelState.IsValid)
+            {
+                _context.FraudPredictions.Add(fraudPrediction);
+                _context.SaveChanges();
+                return RedirectToAction("ShowPredictions");
+            }
+
+            // If model state is not valid, return the view with errors
+            return View("ShowPredictions");
+
+        }
+        
+        public IActionResult ShowPredictions()
+        {
+            var records = _context.FraudPredictions.ToList();
+            
+            var predictions = new List<FraudPred>();  
+            
+            var class_type_dict = new Dictionary<int, string>
+            {
+                { 0, "Not Fraudulent" },
+                { 1, "Fraudulent" }
+            };
+
+            foreach (var record in records)
+            {
+                var input = new List<float>
+                {
+                    record.Time, record.Amount, record.DayOfWeekMon, record.DayOfWeekSat,
+                    record.DayOfWeekSun, record.DayOfWeekThu, record.DayOfWeekTue, record.DayOfWeekWed, record.EntryModePin,
+                    record.EntryModeTap, record.TypeOfTransactionOnline, record.TypeOfTransactionPos,
+                    record.CountryOfTransactionIndia, record.CountryOfTransactionRussia,
+                    record.CountryOfTransactionUsa,
+                    // record.CountryOfTransactionUnitedKingdom,
+                    record.ShippingAddressIndia,
+                    record.ShippingAddressRussia,
+                    record.ShippingAddressUsa, 
+                    // record.ShippingAddressUnitedKingdom,
+                    record.BankHsbc, record.BankHalifax, record.BankLloyds, record.BankMetro, record.BankMonzo,
+                    record.BankRbs, record.TypeOfCardVisa
+                };
+                var inputTensor = new DenseTensor<float>(input.ToArray(), new[] { 1, input.Count });
+
+                var inputs = new List<NamedOnnxValue>
+                {
+                    NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+                };
+
+                string predictionResult;
+                using (var results = _session.Run(inputs))
+                {
+                    var prediction = results.FirstOrDefault(item => item.Name == "output_label")?.AsTensor<long>().ToArray();
+                    predictionResult = prediction != null && prediction.Length > 0 ? class_type_dict.GetValueOrDefault((int)prediction[0], "Unknown") : "Error in prediction";
+                }
+
+                predictions.Add(new FraudPred() { FraudPrediction = record, Prediction = predictionResult }); // Adds the fraud information and prediction 
+            }
+
+            
+
+            return View(predictions);
+        }
+
     }
 }
