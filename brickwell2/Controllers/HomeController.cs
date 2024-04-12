@@ -127,7 +127,7 @@ namespace brickwell2.Controllers
         //    return View(productObject);
         //}
 
-        public IActionResult Products(int pageNum, string? productCategory)
+        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor)
         {
             int pageSize = 6;
 
@@ -135,8 +135,9 @@ namespace brickwell2.Controllers
             pageNum = Math.Max(pageNum, 1);
 
             var productQuery = _repo.Products
-                                .Where(x => x.Category == productCategory || productCategory == null)
-                                .OrderBy(x => x.Name);
+                                    .Where(x => (x.Category == productCategory || productCategory == null)
+                                                && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
+                                    .OrderBy(x => x.Name);
 
             var productObject = new PaginationListViewModel
             {
@@ -148,13 +149,12 @@ namespace brickwell2.Controllers
                 {
                     CurrentPage = pageNum,
                     ProductsPerPage = pageSize,
-                    TotalProducts = productCategory == null
-                                     ? productQuery.Count()
-                                     : productQuery.Where(x => x.Category == productCategory).Count()
+                    TotalProducts = productQuery.Count() // Updated to reflect the count of filtered query
                 },
             };
             return View(productObject);
         }
+
 
 
 

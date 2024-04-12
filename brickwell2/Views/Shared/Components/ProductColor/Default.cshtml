@@ -1,5 +1,4 @@
-﻿
-@* @model IQueryable<string> *@
+﻿@* @model IQueryable<string> *@
 @* *@
 @* <div class="d-grid gap-2"> *@
 @*     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">All Products</a> *@
@@ -17,8 +16,6 @@
         align-items: flex-start; /* Align items to the start (left side) of the container */
         width: 100%; /* Full width to contain the checkboxes */
         padding-left: 35%; /* Adjust this to visually center the checkboxes in the container */
-        padding-top: 10%;
-        padding bottom: 10%;
         box-sizing: border-box; /* Include padding in the width */
     }
 
@@ -30,7 +27,7 @@
         margin-bottom: 10px; /* Space between each item */
     }
 
-    .category-checkbox {
+    .primarycolor-checkbox {
         opacity: 0; /* Hide the checkbox */
         position: absolute; /* Take it out of document flow */
         z-index: -1; /* Put it behind the custom checkbox */
@@ -51,11 +48,11 @@
         transform: translateY(-50%);
     }
 
-    .category-checkbox:checked + .custom-checkbox {
+    .primarycolor-checkbox:checked + .custom-checkbox {
         background-color: #007bff; /* Background color when checked */
     }
 
-        .category-checkbox:checked + .custom-checkbox::after {
+    .primarycolor-checkbox:checked + .custom-checkbox::after {
             content: '';
             position: absolute;
             left: 5px;
@@ -67,41 +64,33 @@
             border-width: 0 2px 2px 0;
         }
 
-
 </style>
+
 
 <div class="d-grid gap-2">
 
-    <h3>Filter:</h3>
-    <h4>Categories</h4>
-
-    <label class="custom-checkbox-label">
-        <input type="checkbox" class="category-checkbox" data-category="" />
-        <span class="custom-checkbox"></span> <!-- Custom checkbox -->
-        All Products
-    </label>
+    <h4>Colors</h4>
 
     @foreach (string prod in Model ?? Enumerable.Empty<string>())
     {
         <label class="custom-checkbox-label">
-            <input type="checkbox" class="category-checkbox" data-category="@prod" @(prod == ViewBag.SelectedProductCategory ? "checked" : "") />
+            @* <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" asp-route-productcategory="@prod" asp-route-pageNum="1">@prod</a> *@
+            <input type="checkbox" class="primarycolor-checkbox" data-primarycolor="@prod" @(prod == ViewBag.SelectedProductprimarycolor ? "checked" : "") />@prod
             <span class="custom-checkbox"></span> <!-- Custom checkbox -->
-            @prod
         </label>
     }
 </div>
 
-
-
 <script>
-    document.querySelectorAll('.category-checkbox').forEach(function (checkbox) {
+    document.querySelectorAll('.primarycolor-checkbox').forEach(function (checkbox) {
         checkbox.addEventListener('change', function () {
-            var selectedCategories = [];
-            document.querySelectorAll('.category-checkbox:checked').forEach(function (checked) {
-                selectedCategories.push(checked.getAttribute('data-category'));
+            var selectedprimarycolor = [];
+            document.querySelectorAll('.primarycolor-checkbox:checked').forEach(function (checked) {
+                selectedprimarycolor.push(checked.getAttribute('data-primarycolor'));
             });
-            var categoryParam = selectedCategories.join(',');
-            window.location.href = '@Url.Action("Products", "Home")?productCategory=' + categoryParam + '&pageNum=1';
+            var primarycolorParam = selectedprimarycolor.join(',');
+            window.location.href = '@Url.Action("Products", "Home")?productPrimaryColor=' + primarycolorParam + '&pageNum=1';
+
         });
     });
 </script>
