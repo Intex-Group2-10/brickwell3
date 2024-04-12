@@ -85,19 +85,14 @@
 
             <div class="row">
               <div class="col-md-12">
-                @* <button class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" onclick="window.location='checkout.html'">Proceed To Checkout</button> *@
+                @if (User.Identity.IsAuthenticated)
+                {
                 <a class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" asp-controller="Home" asp-action="Checkout" asp-route-total="@Model.Cart?.CalculateTotal()">Proceed to Checkout</a>
-                @* <form method="post" asp-page="/Checkout" asp-route-returnUrl="@ViewData["ReturnUrl"]"> *@
-                @*   <input type="hidden" value="@Model.Cart" /> *@
-                @*   <button asp-controller="Home" asp-action="Checkout" type="submit" class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none;">Proceed to Checkout</button> *@
-                @* </form> *@
-                @* <form method="post" asp-page="/Checkout" asp-route-returnUrl="@ViewData["ReturnUrl"]"> *@
-                @*     <input type="hidden" name="cart" value="@Json.Serialize(Model.Cart)" /> *@
-                @*     <button type="submit" class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none;">Proceed to Checkout</button> *@
-                @* </form> *@
-
-                @* asp-route-id="@x.Id" *@
-              </div>
+                }
+                else { 
+                  <a class="btn btn-lg py-3 btn-block" style="margin-top: 30px; font-weight: 700; color: black; background: #FEC107; border-radius: 15px; transform: translate(0, -50%); font-size: 18px; border: none" asp-area="Identity" asp-page="/Account/Login">Proceed to Checkout</a>
+                }
+                </div>
             </div>
           </div>
         </div>

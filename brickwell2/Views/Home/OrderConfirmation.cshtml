@@ -1,0 +1,21 @@
+@* @model FraudPred *@
+@{
+    ViewData["Title"] = "Thank You!";
+}
+<div style="padding-left: 50px; padding-top: 50px">
+<h2>Order Confirmation</h2>
+
+@if ((string)ViewData["Prediction"] == "Not Fraudulent")
+{
+    <p>Thank you for your order! We'll send an email shortly with your order details.</p>
+}
+else
+{
+    <p>Thank you for placing an order! We'll send an email shortly with your order details after checking your inputted bank information.</p>
+}
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Back to Home</a>
+</div>
+
+
+<br><br><br><br><br><br><br><br><br><br>
