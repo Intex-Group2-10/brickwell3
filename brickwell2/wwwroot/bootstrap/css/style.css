@@ -805,6 +805,7 @@ textarea {
   position: relative;
   text-align: center;
   background: #FFF6C9;
+  bottom: 0;
 }
 
 /*.main-color-bg {*/

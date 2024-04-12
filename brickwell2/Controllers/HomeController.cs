@@ -51,6 +51,7 @@ namespace brickwell2.Controllers
         {
             return View();
         }
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout(string total)
         {
@@ -66,6 +67,21 @@ namespace brickwell2.Controllers
             return View(new FraudPrediction()); // fallback if parsing fails
         }
         
+        [Authorize]
+        [HttpPost]
+        public IActionResult Checkout(FraudPred model)
+        {
+            // Perform any necessary checks or operations here
+            if (model.Prediction == "Not Fraudulent")
+            {
+                return RedirectToAction("OrderConfirmation", new { prediction = "Not Fraudulent" });
+            }
+            else
+            {
+                return RedirectToAction("OrderConfirmation", new { prediction = "Fraudulent" });
+            }
+        }
+
         [HttpGet]
         public IActionResult ProductDetail(int id)
         {
@@ -169,7 +185,7 @@ namespace brickwell2.Controllers
         {
             return View();
         }
-        
+        [Authorize]
         [HttpPost]
         public IActionResult Predict(FraudPrediction fraudPrediction, int time, int amount, int day_of_week_Mon, int day_of_week_Sat, int day_of_week_Sun, int day_of_week_Thu, int day_of_week_Tue, int day_of_week_Wed, int entry_mode_PIN, int entry_mode_Tap, int type_of_transaction_Online, int type_of_transaction_POS, int country_of_transaction_India, int country_of_transaction_Russia, int country_of_transaction_USA, int shipping_address_India, int shipping_address_Russia, int shipping_address_USA, int bank_HSBC, int bank_Halifax, int bank_Lloyds, int bank_Metro, int bank_Monzo, int bank_RBS, int type_of_card_Visa)
         {
@@ -216,11 +232,11 @@ namespace brickwell2.Controllers
             {
                 _context.FraudPredictions.Add(fraudPrediction);
                 _context.SaveChanges();
-                return RedirectToAction("ShowPredictions");
+                return RedirectToAction("OrderConfirmation");
             }
 
             // If model state is not valid, return the view with errors
-            return View("ShowPredictions");
+            return View("OrderConfirmation");
 
         }
         
@@ -272,6 +288,12 @@ namespace brickwell2.Controllers
             
 
             return View(predictions);
+        }
+
+        public IActionResult OrderConfirmation(string prediction)
+        {
+            ViewData["Prediction"] = prediction;
+            return View();
         }
 
     }
