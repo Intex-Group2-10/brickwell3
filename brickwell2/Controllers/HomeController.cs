@@ -132,32 +132,35 @@ namespace brickwell2.Controllers
         //    return View(productObject);
         //}
 
-        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor)
+        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor, int pageSize)
         {
-            int pageSize = 6;
-
+            pageSize = Math.Clamp(pageSize, 5, 20);
+        
             // Ensure pageNum is at least 1
             pageNum = Math.Max(pageNum, 1);
-
+        
             var productQuery = _repo.Products
-                                    .Where(x => (x.Category == productCategory || productCategory == null)
-                                                && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
-                                    .OrderBy(x => x.Name);
-
+                .Where(x => (x.Category == productCategory || productCategory == null)
+                            && (x.PrimaryColor == productPrimaryColor || productPrimaryColor == null))
+                .OrderBy(x => x.Name);
+        
             var productObject = new PaginationListViewModel
             {
                 Products = productQuery
-                            .Skip((pageNum - 1) * pageSize)
-                            .Take(pageSize),
-
+                    .Skip((pageNum - 1) * pageSize)
+                    .Take(pageSize),
+        
                 PaginationInfo = new PaginationInfo
                 {
                     CurrentPage = pageNum,
                     ProductsPerPage = pageSize,
                     TotalProducts = productCategory == null
-                                     ? productQuery.Count()
-                                     : productQuery.Where(x => x.Category == productCategory).Count()
+                        ? productQuery.Count()
+                        : productQuery.Where(x => x.Category == productCategory).Count()
                 },
+                
+                CurrentCategory = productCategory,
+                CurrentColor = productPrimaryColor
             };
             return View(productObject);
         }

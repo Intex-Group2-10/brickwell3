@@ -10,9 +10,7 @@
  <div class="container"> 
    <div class="row mb-5"> 
      <div class="col-md-12"> 
-       <div class="border p-4 rounded" role="alert"> 
-         Returning customer? <a href="#">Click here</a> to login 
-       </div> 
+       
      </div> 
    </div> 
    <form action="/Home/Predict#predictionResult" method="post"> 
@@ -152,10 +150,9 @@
          <div class="col-md-12"> 
            <h2 class="h3 mb-3 text-black">Your Order</h2> 
            <div class="p-3 p-lg-5 border bg-white"> 
-             <table class="table site-block-order-table mb-5"> 
+             <table class="table site-block-order-table mb-5" style="margin-bottom: 0"> 
                <thead> 
-               <th>Product</th> 
-               <th>Total</th> 
+               <th>Order Total</th>
                </thead> 
                @* <tbody>  *@
                @*  @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>()) *@
@@ -183,22 +180,19 @@
                @*     <td>@((l.Quantity * l.Product.Price).ToString("c"))</td> *@
                @*   </tr> *@
                @* } *@
-               
-               <tr>
-                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                 @* <td class="text-black">@Model.Cart?.CalculateTotal().ToString("c")</td> *@
-                 <div class="form-group">
-                       <label asp-for="Amount">Amount</label>
-                       <input asp-for="Amount" class="form-control" placeholder="Enter Amount">
-                       </div>
-               </tr>
-               <tr>
-                 <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+               <tr style="margin-bottom: 0">
+                 @* <td class="text-black font-weight-bold"><strong>Order Total</strong></td> *@
                  @* <td class="text-black font-weight-bold"><strong>@Model.Cart?.CalculateTotal().ToString("c")</strong></td> *@
                </tr>
                </tbody>
              </table> 
- 
+                <tr>
+                  @* <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td> *@
+                  @* <td class="text-black">@Model.Cart?.CalculateTotal().ToString("c")</td> *@
+                  <div class="form-group" style="margin-top: 0">
+                    <input asp-for="Amount" class="form-control" placeholder="Enter Amount" readonly>
+                  </div>
+                </tr><br/>
              <div class="border p-3 mb-3"> 
                <h3 class="h6 mb-0"><a class="d-block" data-bs-toggle="collapse" href="#collapsebank" role="button" aria-expanded="false" aria-controls="collapsebank">Return Policy</a></h3> 
                 
@@ -208,7 +202,7 @@
                  </div> 
                </div> 
              </div> 
-                
+             
              <div class="form-group"> 
                <button class="btn btn-black btn-lg py-3 btn-block" type="submit" value="Submit Order">Place Order</button> 
              </div> 
@@ -254,7 +248,7 @@
          //     // Set the corresponding day of the week value to 1
          //     document.getElementsByName("DayOfWeek" + selectedDay)[0].value = 1;
          // }
- 
+           
          function updateEntryMode() {
              // Reset all entry mode values to 0
              document.getElementById("EntryModePIN").value = 0;
