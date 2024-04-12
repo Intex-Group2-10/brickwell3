@@ -62,9 +62,9 @@
                 <ul class="navbar-nav">
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        var user = await UserManager.GetUserAsync(User);
-                        if (await UserManager.IsInRoleAsync(user, "Admin")) // "Admin" is the role you're checking for
-                        {
+                        // var user = await UserManager.GetUserAsync(User);
+                        // if (await UserManager.IsInRoleAsync(user, "Admin")) // "Admin" is the role you're checking for
+                        // {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
                             </li>
@@ -73,11 +73,10 @@
                                     <button type="submit" class="nav-link text-dark">Logout</button>
                                 </form>
                             </li>
-                        }
+                        // }
                     }
                 </ul>
             </ul>
-
         </div>
     </nav>
 </header>

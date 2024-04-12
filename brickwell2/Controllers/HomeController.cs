@@ -23,13 +23,17 @@ namespace brickwell2.Controllers
         private readonly LegoDbContext _context;
         private readonly InferenceSession _session;
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp, LegoDbContext context, InferenceSession session, ILogger<HomeController> logger)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp, LegoDbContext context, InferenceSession session, ILogger<HomeController> logger, IWebHostEnvironment webHostEnvironment)
         {
             _repo = temp;
             _securityRepository = securetemp;
             _context = context;
             _session = session;
             _logger = logger;
+            
+            var modelPath = Path.Combine(webHostEnvironment.WebRootPath, "model", "intex_model.onnx");
+            _session = new InferenceSession(modelPath);
         }
 
 		public async Task<IActionResult> Index()
