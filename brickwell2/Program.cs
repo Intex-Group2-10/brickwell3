@@ -48,7 +48,13 @@ public class Program
             options.UseSqlServer(builder.Configuration["ConnectionStrings:LegoConnection"]);
         });
 
-        builder.Services.AddDbContext<LegoSecurityContext>(options =>
+		builder.Services.AddDbContext<BrickwellDbContext>(options =>
+		{
+			//options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
+			options.UseSqlServer(builder.Configuration["ConnectionStrings:LegoConnection"]);
+		});
+
+		builder.Services.AddDbContext<LegoSecurityContext>(options =>
         {
             options.UseSqlServer(builder.Configuration["ConnectionStrings:LegoConnection"]);
             //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoSecurityConnection"]);

@@ -6,7 +6,8 @@
 @{
 	ViewData["Title"] = "Home Page";
 }
-@model List<Product>
+
+@model brickwell2.Models.ViewModels.UserRecommendationViewModel
 
 
 <div style="width: 100vw; height: 506px; position: relative">
@@ -27,82 +28,114 @@
   </div>
 </div>
 
+
+@if (ViewBag.Recommendation1 != null)
+{
+	<div class="product-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation1.ProductId">
+						<img src="@ViewBag.Recommendation1.ImgLink" alt="Item 1" class="img-fluid product-thumbnail">
+						<h3 class="product-title">@ViewBag.Recommendation1.Name</h3>
+						<strong class="product-price">$@ViewBag.Recommendation1.Price.00</strong>
+					</a>
+				</div>
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation2.ProductId">
+						<img src="@ViewBag.Recommendation2.ImgLink" alt="Item 2" class="img-fluid product-thumbnail">
+						<h3 class="product-title">@ViewBag.Recommendation2.Name</h3>
+						<strong class="product-price">$@ViewBag.Recommendation2.Price.00</strong>
+					</a>
+				</div>
+				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="@ViewBag.Recommendation3.ProductId">
+						<img src="@ViewBag.Recommendation3.ImgLink" alt="Item 3" class="img-fluid product-thumbnail">
+						<h3 class="product-title">@ViewBag.Recommendation3.Name</h3>
+						<strong class="product-price">$@ViewBag.Recommendation3.Price.00</strong>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+}
+else{
 <!-- Start Product Section -->
 <div class="product-section">
 	<div class="container">
 		<div class="row">
 			<!-- Start Column 1 -->
 			<div class="col-md-12 col-lg-3 mb-5 mb-lg-0" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-right: 30px;">
-                <h2 class="mb-4 section-title">Todays top picks</h2><br/>
-                <div style="width: 160px; height: 47.91px; background: #FEC107; border-radius: 15px; position: relative; overflow: hidden;">
-                    <a style="position: absolute; top: 50%; left: 0; transform: translate(0, -50%); font-size: 24px; font-weight: 700; white-space: nowrap; text-decoration: none; color: black; width: 100%; text-align: center;" asp-area="" asp-controller="Home" asp-action="Products">See More</a>
-                </div>
-            </div>
+				<h2 class="mb-4 section-title">Todays top picks</h2><br />
+				<div style="width: 160px; height: 47.91px; background: #FEC107; border-radius: 15px; position: relative; overflow: hidden;">
+					<a style="position: absolute; top: 50%; left: 0; transform: translate(0, -50%); font-size: 24px; font-weight: 700; white-space: nowrap; text-decoration: none; color: black; width: 100%; text-align: center;" asp-area="" asp-controller="Home" asp-action="Products">See More</a>
+				</div>
+			</div>
 			<!-- End Column 1 -->
-			
-				<!-- Start Column 2 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="27">
-						<img src="~/images/27_peacock.webp" class="img-fluid product-thumbnail">
-						<h3 class="product-title">Exotic Peacock</h3>
-						<strong class="product-price">$20.00</strong>
-						<span class="icon-cross">
-							<form method="post" asp-page="/Cart">
-								<input type="hidden" name="ProductId" value="27"/>
-								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
-								<button type="submit" style="background-color: transparent; border: none;">
-									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
-								</button>
-							</form>
+			<!-- Start Column 2 -->
+			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="27">
+					<img src="~/images/27_peacock.webp" class="img-fluid product-thumbnail">
+					<h3 class="product-title">Exotic Peacock</h3>
+					<strong class="product-price">$20.00</strong>
+					<span class="icon-cross">
+						<form method="post" asp-page="/Cart">
+							<input type="hidden" name="ProductId" value="27" />
+							<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+							<button type="submit" style="background-color: transparent; border: none;">
+								<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+							</button>
+						</form>
 
-						</span>
-					</a>
-				</div>
-				<!-- End Column 2 -->
+					</span>
+				</a>
+			</div>
+			<!-- End Column 2 -->
+			<!-- Start Column 3 -->
+			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="33">
+					<img src="~/images/33_astronaut.webp" class="img-fluid product-thumbnail">
+					<h3 class="product-title">Space Astronaut</h3>
+					<strong class="product-price">$55.00</strong>
+					<span class="icon-cross">
+						<form method="post" asp-page="/Cart">
+							<input type="hidden" name="ProductId" value="33" />
+							<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+							<button type="submit" style="background-color: transparent; border: none;">
+								<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+							</button>
+						</form>
 
-				<!-- Start Column 3 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="33">
-						<img src="~/images/33_astronaut.webp" class="img-fluid product-thumbnail">
-						<h3 class="product-title">Space Astronaut</h3>
-						<strong class="product-price">$55.00</strong>
-						<span class="icon-cross">
-							<form method="post" asp-page="/Cart">
-								<input type="hidden" name="ProductId" value="33"/>
-								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
-								<button type="submit" style="background-color: transparent; border: none;">
-									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
-								</button>
-							</form>
+					</span>
+				</a>
+			</div>
+			<!-- End Column 3 -->
+			<!-- Start Column 4 -->
+			<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+				<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="34">
+					<img src="~/images/34_uphouse.webp" class="img-fluid product-thumbnail">
+					<h3 class="product-title">"Up" House</h3>
+					<strong class="product-price">$60.00</strong>
+					<span class="icon-cross">
+						<form method="post" asp-page="/Cart">
+							<input type="hidden" name="ProductId" value="34" />
+							<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+							<button type="submit" style="background-color: transparent; border: none;">
+								<img src="~/images/cross.svg" alt="plus" class="img-fluid">
+							</button>
+						</form>
 
-						</span>
-					</a>
-				</div>
-				<!-- End Column 3 -->
-
-				<!-- Start Column 4 -->
-				<div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-					<a class="product-item" asp-controller="Home" asp-action="ProductDetail" asp-route-id="34">
-						<img src="~/images/34_uphouse.webp" class="img-fluid product-thumbnail">
-						<h3 class="product-title">"Up" House</h3>
-						<strong class="product-price">$60.00</strong>
-						<span class="icon-cross">
-							<form method="post" asp-page="/Cart">
-								<input type="hidden" name="ProductId" value="34"/>
-								<input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
-								<button type="submit" style="background-color: transparent; border: none;">
-									<img src="~/images/cross.svg" alt="plus" class="img-fluid">
-								</button>
-							</form>
-
-						</span>
-					</a>
-				</div>
-				<!-- End Column 4 -->
+					</span>
+				</a>
+			</div>
+			<!-- End Column 4 -->
 		</div>
 	</div>
 </div>
 <!-- End Product Section -->
+};
 
 <!-- Start Why Choose Us Section -->
 <div class="why-choose-section" style="margin-bottom: 100px">

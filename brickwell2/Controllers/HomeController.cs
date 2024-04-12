@@ -23,10 +23,44 @@ namespace brickwell2.Controllers
             _securityRepository = securetemp;
         }
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        public async Task<IActionResult> Index()
         {
+            //List<Product> productsToDisplay = new List<Product>();
+            //if (User.Identity.IsAuthenticated)
+            //{
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            var userExists = await _repo.UserCusts.AnyAsync(u => u.UserId == userId);
+
+            // Use the result in an if statement
+            if (userExists)
+            {
+                // Code to execute if the user ID exists in the UserCust table
+                var custid = await _repo.UserCusts.Where(u => u.UserId == userId).Select(u => u.CustomerId).FirstOrDefaultAsync();
+                var transid = await _repo.Orders.Where(u => u.CustomerId == custid).Select(u => u.TransactionId).FirstOrDefaultAsync();
+                var prodid = await _repo.LineItems.Where(u => u.TransactionId == transid).Select(u => u.ProductId).FirstOrDefaultAsync();
+
+                var recommendation = _repo.UserBasedRecommendations
+                    .Where(r => r.ProductId == prodid)
+                    .FirstOrDefault();
+
+                // Fetch details for each recommendation
+                ViewBag.Recommendation1 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct1);
+                ViewBag.Recommendation2 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct2);
+                ViewBag.Recommendation3 = _repo.Products.Single(p => p.ProductId == recommendation.RecommendedProduct3);
+
+                var viewModel = new UserRecommendationViewModel();
+
+                return View(viewModel);
+
+            }
             return View();
         }
+
 
         public IActionResult Privacy()
         {
@@ -113,7 +147,7 @@ namespace brickwell2.Controllers
         //    return View(productObject);
         //}
 
-        public IActionResult Products(int pageNum, string? productCategory)
+        public IActionResult Products(int pageNum, string? productCategory, string? productPrimaryColor)
         {
             int pageSize = 6;
 
