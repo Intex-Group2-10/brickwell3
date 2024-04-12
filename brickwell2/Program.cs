@@ -8,7 +8,14 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        builder.Services.Configure<CookiePolicyOptions>(options =>
+        {
+            // This lambda determines whether user consent for non-essential 
+            // cookies is needed for a given request.
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+            options.ConsentCookieValue = "true";
+        });
         var services = builder.Services;
         var configuration = builder.Configuration;
 
@@ -54,14 +61,7 @@ public class Program
 
         builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
         builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-        builder.Services.Configure<CookiePolicyOptions>(options =>
-        {
-            // This lambda determines whether user consent for non-essential 
-            // cookies is needed for a given request.
-            options.CheckConsentNeeded = context => true;
-            options.MinimumSameSitePolicy = SameSiteMode.None;
-            options.ConsentCookieValue = "true";
-        });
+
         var app = builder.Build();
         // builder.Services.AddScoped<Cart>(sp => SessionCart.GetCart(sp));
         // builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -79,7 +79,7 @@ public class Program
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
-
+        app.UseCookiePolicy();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseSession();
@@ -87,10 +87,10 @@ public class Program
         
         app.Use(async (context, next) =>
         {
-            context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com https://live.staticflickr.com; frame-src 'self'; connect-src 'self' http://localhost:* wss://localhost:* ws://localhost:*; style-src-elem 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com;");
+            context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https://www.lego.com https://images.brickset.com https://m.media-amazon.com https://live.staticflickr.com; frame-src 'self'; connect-src 'self' http://localhost:* wss://localhost:* ws://localhost:*; style-src-elem 'self' https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline';");
             await next();
         });
-        
+
         app.UseRouting();
 
         app.UseAuthentication();
