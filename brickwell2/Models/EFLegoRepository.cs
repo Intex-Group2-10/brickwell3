@@ -6,13 +6,18 @@ namespace brickwell2.Models
 	public class EFLegoRepository : ILegoRepository
 	{
 		private LegoDbContext _context;
+		private BrickwellDbContext _dbContext;
 
-		public EFLegoRepository(LegoDbContext temp)
+		public EFLegoRepository(LegoDbContext temp, BrickwellDbContext dbtemp)
 		{
 			_context = temp;
+			_dbContext = dbtemp;
 		}
 
+
 		public IQueryable<Customer> Customers => _context.Customers;
+
+		public IQueryable<UserCust> UserCusts => _dbContext.UserCusts;
 
 		public IQueryable<LineItem> LineItems => _context.LineItems;
 

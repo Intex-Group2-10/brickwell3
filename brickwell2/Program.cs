@@ -81,7 +81,12 @@ namespace brickwell2
                 options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
             });
 
-            services.AddDatabaseDeveloperPageExceptionFilter();
+			services.AddDbContext<BrickwellDbContext>(options =>
+			{
+				options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+			});
+
+			services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
