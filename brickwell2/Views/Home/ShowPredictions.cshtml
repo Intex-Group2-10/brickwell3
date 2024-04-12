@@ -1,0 +1,178 @@
+@model IEnumerable<brickwell2.Models.FraudPred>
+
+@{
+    ViewData["Title"] = "Predictions";
+
+    var classTypeDict = new Dictionary<int, string>
+    {
+        { 0, "Not Fraudulent" },
+        { 1, "Fraudulent" }
+    };
+}
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .full-width-table {
+        margin-left: -50px; 
+        margin-right: 0;
+
+    }
+    .table {
+        width: auto; 
+        margin-bottom: 0; 
+    }
+    .prediction-cell {
+        background-color: #e0f2f1;
+    }
+
+</style>
+
+<h2>Predictions</h2>
+<div class="full-width-table table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                @* <th>Time</th> *@
+                <th>Amount</th>
+                @* <th>DayOfWeek_Mon</th> *@
+                @* <th>DayOfWeek_Sat</th> *@
+                @* <th>DayOfWeek_Sun</th> *@
+                @* <th>DayOfWeek_Thu</th> *@
+                @* <th>DayOfWeek_Tue</th> *@
+                @* <th>DayOfWeek_Wed</th> *@
+                <th>EntryMode_PIN</th>
+                <th>EntryMode_Tap</th>
+                <th>TypeOfTransaction_Online</th>
+                <th>TypeOfTransaction_POS</th>
+                <th>CountryOfTransaction_India</th>
+                <th>CountryOfTransaction_Russia</th>
+                <th>CountryOfTransaction_USA</th>
+                @* <th>CountryOfTransaction_UnitedKingdom</th> *@
+                <th>ShippingAddress_India</th>
+                <th>ShippingAddress_Russia</th>
+                <th>ShippingAddress_USA</th>
+                @* <th>ShippingAddress_UnitedKingdom</th> *@
+                <th>Bank_HSBC</th>
+                <th>Bank_Halifax</th>
+                <th>Bank_Lloyds</th>
+                <th>Bank_Metro</th>
+                <th>Bank_Monzo</th>
+                <th>Bank_RBS</th>
+                <th>TypeOfCard_Visa</th>
+                <th class="prediction-cell">Prediction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @* <td>@item.FraudPrediction.Time</td> *@
+                    <td>@item.FraudPrediction.Amount</td>
+                    @* <td>@item.FraudPrediction.DayOfWeekMon</td> *@
+                    @* <td>@item.FraudPrediction.DayOfWeekSat</td> *@
+                    @* <td>@item.FraudPrediction.DayOfWeekSun</td> *@
+                    @* <td>@item.FraudPrediction.DayOfWeekThu</td> *@
+                    @* <td>@item.FraudPrediction.DayOfWeekTue</td> *@
+                    @* <td>@item.FraudPrediction.DayOfWeekWed</td> *@
+                    <td>@item.FraudPrediction.EntryModePin</td>
+                    <td>@item.FraudPrediction.EntryModeTap</td>
+                    <td>@item.FraudPrediction.TypeOfTransactionOnline</td>
+                    <td>@item.FraudPrediction.TypeOfTransactionPos</td>
+                    <td>@item.FraudPrediction.CountryOfTransactionIndia</td>
+                    <td>@item.FraudPrediction.CountryOfTransactionRussia</td>
+                    <td>@item.FraudPrediction.CountryOfTransactionUsa</td>
+                    @* <td>@item.FraudPrediction.CountryOfTransactionUnitedKingdom</td> *@
+                    <td>@item.FraudPrediction.ShippingAddressIndia</td>
+                    <td>@item.FraudPrediction.ShippingAddressRussia</td>
+                    <td>@item.FraudPrediction.ShippingAddressUsa</td>
+                    @* <td>@item.FraudPrediction.ShippingAddressUnitedKingdom</td> *@
+                    <td>@item.FraudPrediction.BankHsbc</td>
+                    <td>@item.FraudPrediction.BankHalifax</td>
+                    <td>@item.FraudPrediction.BankLloyds</td>
+                    <td>@item.FraudPrediction.BankMetro</td>
+                    <td>@item.FraudPrediction.BankMonzo</td>
+                    <td>@item.FraudPrediction.BankRbs</td>
+                    <td>@item.FraudPrediction.TypeOfCardVisa</td>
+                    <td class="prediction-cell">@item.Prediction</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <!-- use a simple if statement in razor code to show incorrect predictions -->
+    <h2>Fraudulent Predictions</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Amount</th>
+                <th>DayOfWeek_Mon</th>
+                <th>DayOfWeek_Sat</th>
+                <th>DayOfWeek_Sun</th>
+                <th>DayOfWeek_Thu</th>
+                <th>DayOfWeek_Tue</th>
+                <th>DayOfWeek_Wed</th>
+                <th>EntryMode_PIN</th>
+                <th>EntryMode_Tap</th>
+                <th>TypeOfTransaction_Online</th>
+                <th>TypeOfTransaction_POS</th>
+                <th>CountryOfTransaction_India</th>
+                <th>CountryOfTransaction_Russia</th>
+                <th>CountryOfTransaction_USA</th>
+                @* <th>CountryOfTransaction_UnitedKingdom</th> *@
+                <th>ShippingAddress_India</th>
+                <th>ShippingAddress_Russia</th>
+                <th>ShippingAddress_USA</th>
+                @* <th>ShippingAddress_UnitedKingdom</th> *@
+                <th>Bank_HSBC</th>
+                <th>Bank_Halifax</th>
+                <th>Bank_Lloyds</th>
+                <th>Bank_Metro</th>
+                <th>Bank_Monzo</th>
+                <th>Bank_RBS</th>
+                <th>TypeOfCard_Visa</th>
+                <th class="prediction-cell">Prediction</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Prediction == "Fraudulent")
+                {
+                    <tr>
+                        @* <td>@item.FraudPrediction.Time</td> *@
+                        <td>@item.FraudPrediction.Amount</td>
+                        @* <td>@item.FraudPrediction.DayOfWeekMon</td> *@
+                        @* <td>@item.FraudPrediction.DayOfWeekSat</td> *@
+                        @* <td>@item.FraudPrediction.DayOfWeekSun</td> *@
+                        @* <td>@item.FraudPrediction.DayOfWeekThu</td> *@
+                        @* <td>@item.FraudPrediction.DayOfWeekTue</td> *@
+                        @* <td>@item.FraudPrediction.DayOfWeekWed</td> *@
+                        <td>@item.FraudPrediction.EntryModePin</td>
+                        <td>@item.FraudPrediction.EntryModeTap</td>
+                        <td>@item.FraudPrediction.TypeOfTransactionOnline</td>
+                        <td>@item.FraudPrediction.TypeOfTransactionPos</td>
+                        <td>@item.FraudPrediction.CountryOfTransactionIndia</td>
+                        <td>@item.FraudPrediction.CountryOfTransactionRussia</td>
+                        <td>@item.FraudPrediction.CountryOfTransactionUsa</td>
+                        @* <td>@item.FraudPrediction.CountryOfTransactionUnitedKingdom</td> *@
+                        <td>@item.FraudPrediction.ShippingAddressIndia</td>
+                        <td>@item.FraudPrediction.ShippingAddressRussia</td>
+                        <td>@item.FraudPrediction.ShippingAddressUsa</td>
+                        @* <td>@item.FraudPrediction.ShippingAddressUnitedKingdom</td> *@
+                        <td>@item.FraudPrediction.BankHsbc</td>
+                        <td>@item.FraudPrediction.BankHalifax</td>
+                        <td>@item.FraudPrediction.BankLloyds</td>
+                        <td>@item.FraudPrediction.BankMetro</td>
+                        <td>@item.FraudPrediction.BankMonzo</td>
+                        <td>@item.FraudPrediction.BankRbs</td>
+                        <td>@item.FraudPrediction.TypeOfCardVisa</td>
+                        <td class="prediction-cell">@item.Prediction</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

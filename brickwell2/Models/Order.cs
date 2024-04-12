@@ -20,7 +20,7 @@ public partial class Order
 
     public string EntryMode { get; set; } = null!;
 
-    public int? Amount { get; set; }
+    public double? Amount { get; set; }
 
     public string TypeOfTransaction { get; set; } = null!;
 
