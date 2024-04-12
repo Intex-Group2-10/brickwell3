@@ -64,8 +64,19 @@ namespace brickwell2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
                 options.ConsentCookieValue = "true";
             });
-
+            
             services.AddDbContext<LegoDbContext>(options =>
+            {
+                //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
+                options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+            });
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+            });
+            
+            services.AddDbContext<LegoSecurityContext>(options =>
             {
                 options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
             });
@@ -74,35 +85,27 @@ namespace brickwell2
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<LegoDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
-            services.AddDbContext<LegoDbContext>(options =>
+            // services.AddDbContext<LegoDbContext>(options =>
+            // {
+            //     options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+            // });
+            
+            services.Configure<IdentityOptions>(options =>
             {
-                options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
+                // Default Password settings.
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 12;
+                options.Password.RequiredUniqueChars = 3;
             });
-        services.Configure<IdentityOptions>(options =>
-        {
-            // Default Password settings.
-            options.Password.RequireDigit = true;
-            options.Password.RequireLowercase = true;
-            options.Password.RequireNonAlphanumeric = true;
-            options.Password.RequireUppercase = true;
-            options.Password.RequiredLength = 12;
-            options.Password.RequiredUniqueChars = 3;
-        });
-        services.AddDbContext<LegoDbContext>(options =>
-        {
-            //options.UseSqlite(builder.Configuration["ConnectionStrings:LegoConnection"]);
-            options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
-        });
-
-            services.AddDbContext<LegoSecurityContext>(options =>
-            {
-                options.UseSqlServer(configuration["ConnectionStrings:LegoConnection"]);
-            });
+            
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {

@@ -10,7 +10,7 @@ public partial class FraudPrediction
     public int TransactionID { get; set; }
     // public int Time { get; set; }
 
-    public double? Amount { get; set; }
+    public int Amount { get; set; }
 
     // public int DayOfWeekMon { get; set; }
     //
