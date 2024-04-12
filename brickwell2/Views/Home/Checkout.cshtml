@@ -1,8 +1,7 @@
-   
- @{ 
+@{ 
      ViewData["Title"] = "Checkout"; 
  } 
-@model brickwell2.Pages.CheckoutModel
+@model FraudPrediction
  
  <div style="width: 100vw; height: 150px; position: relative; background: #FFF6C9; display: flex; justify-content: flex-start; align-items: center; padding-left: 100px;"> 
      <h1 style="font-size: 60px;">Checkout</h1> 
@@ -16,11 +15,17 @@
        </div> 
      </div> 
    </div> 
+   <form action="/Home/Predict#predictionResult" method="post"> 
    <div class="row"> 
      <div class="col-md-6 mb-5 mb-md-0"> 
        <h2 class="h3 mb-3 text-black">Billing Details</h2> 
        <div class="p-3 p-lg-5 border bg-white"> 
-         <form action="/Home/Predict#predictionResult" method="post"> 
+      
+           @* <div class="form-group"><label>Amount:</label><input asp-for="Amount" type="number" name="amount"/></div>  *@
+           @* <div class="form-group"> *@
+           @*   <label asp-for="Amount">Amount</label> *@
+           @*   <input asp-for="Amount" class="form-control" step="0.01" placeholder="Enter Amount"> *@
+           @* </div> *@
            <div class="form-group"> 
              <label for="c_country" class="text-black">Country for billing <span class="text-danger">*</span></label> 
              <select id="c_country" class="form-control" onchange="updateCountryTransaction()"> 
@@ -33,10 +38,10 @@
              </select> 
            </div> 
            @* <input type="hidden" asp-for="CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" />  *@
-           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionIndia" id="countryTransactionIndia" value="0" /> 
-           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionRussia" id="countryTransactionRussia" value="0" /> 
-           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionUsa" id="countryTransactionUSA" value="0" /> 
-           <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" /> 
+           <input type="hidden" asp-for="@Model.CountryOfTransactionIndia" id="countryTransactionIndia" value="0" /> 
+           <input type="hidden" asp-for="@Model.CountryOfTransactionRussia" id="countryTransactionRussia" value="0" /> 
+           <input type="hidden" asp-for="@Model.CountryOfTransactionUsa" id="countryTransactionUSA" value="0" /> 
+           @* <input type="hidden" asp-for="@Model.FraudPrediction.CountryOfTransactionUnitedKingdom" id="countryTransactionUnitedKingdom" value="0" />  *@
            
            <div class="form-group row"> 
              <div class="col-md-6"> 
@@ -63,12 +68,12 @@
                  <option value="RBS">RBS</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankHsbc" id="bankHSBC" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankHalifax" id="bankHalifax" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankLloyds" id="bankLloyds" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankMetro" id="bankMetro" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankMonzo" id="bankMonzo" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.BankRbs" id="bankRBS" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankHsbc" id="bankHSBC" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankHalifax" id="bankHalifax" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankLloyds" id="bankLloyds" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankMetro" id="bankMetro" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankMonzo" id="bankMonzo" value="0" /> 
+             <input type="hidden" asp-for="@Model.BankRbs" id="bankRBS" value="0" /> 
       
              <div class="col-md-6"> 
                <label for="cardType" class="text-black">Type of Card <span class="text-danger">*</span></label> 
@@ -78,7 +83,7 @@
                  <option value="Visa">Visa</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfCardVisa" id="typeofcardVisa" value="0" /> 
+             <input type="hidden" asp-for="@Model.TypeOfCardVisa" id="typeofcardVisa" value="0" /> 
            </div> 
             
             
@@ -94,8 +99,8 @@
                  <option value="POS">POS</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfTransactionOnline" id="transactionTypeOnline" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.TypeOfTransactionPos" id="transactionTypePOS" value="0" /> 
+             <input type="hidden" asp-for="@Model.TypeOfTransactionOnline" id="transactionTypeOnline" value="0" /> 
+             <input type="hidden" asp-for="@Model.TypeOfTransactionPos" id="transactionTypePOS" value="0" /> 
  
              <div class="col-md-6"> 
                <label for="entryMode" class="text-black">Entry Mode <span class="text-danger">*</span></label> 
@@ -106,15 +111,15 @@
                  <option value="Tap">Tap</option> 
                </select> 
              </div> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.EntryModePin" id="entryModePIN" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.EntryModeTap" id="entryModeTap" value="0" /> 
+             <input type="hidden" asp-for="@Model.EntryModePin" id="entryModePIN" value="0" /> 
+             <input type="hidden" asp-for="@Model.EntryModeTap" id="entryModeTap" value="0" /> 
  
            </div> 
             
            <div class="form-group row"> 
              <div class="col-md-12"> 
                <label for="c_address" class="text-black">Shipping Address <span class="text-danger">*</span></label> 
-                <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">  
+                @* <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">   *@
                 <select id="c_address" class="form-control" onchange="updateShippingAddress()"> 
                  <option value="" disabled selected>Select country</option> 
                  <option value="China">China</option> 
@@ -124,9 +129,9 @@
                  @* <option value="UnitedKingdom">United Kingdom</option>  *@
                </select> 
              </div> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressIndia" id="shippingAddressIndia" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressRussia" id="shippingAddressRussia" value="0" /> 
-             <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressUsa" id="shippingAddressUSA" value="0" /> 
+             <input type="hidden" asp-for="@Model.ShippingAddressIndia" id="shippingAddressIndia" value="0" /> 
+             <input type="hidden" asp-for="@Model.ShippingAddressRussia" id="shippingAddressRussia" value="0" /> 
+             <input type="hidden" asp-for="@Model.ShippingAddressUsa" id="shippingAddressUSA" value="0" /> 
              @* <input type="hidden" asp-for="@Model.FraudPrediction.ShippingAddressUnitedKingdom" id="shippingAddressUnitedKingdom" value="0" />  *@
            </div> 
             
@@ -134,8 +139,8 @@
              <label for="c_order_notes" class="text-black">Order Notes</label> 
              <textarea name="c_order_notes" id="c_order_notes" cols="30" rows="5" class="form-control" placeholder="Write your notes here..."></textarea> 
            </div> 
-           <div class="form-group"><input type="submit" value="Submit Order"/></div>
-         </form> 
+          
+         
        </div> 
      </div> 
         
@@ -152,24 +157,46 @@
                <th>Product</th> 
                <th>Total</th> 
                </thead> 
-               <tbody> 
-                @foreach (var product in Model.Cart)
-                {
-                    <div>
-                        <h3>@product.Name</h3>
-                        <p>@product.Description</p>
-                        <p>$@product.Price</p>
-                    </div>
-                }
-               <tr> 
-                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td> 
-                 <td class="text-black">$350.00</td> 
-               </tr> 
-               <tr> 
-                 <td class="text-black font-weight-bold"><strong>Order Total</strong></td> 
-                 <td class="text-black font-weight-bold"><strong>$350.00</strong></td> 
-               </tr> 
-               </tbody> 
+               @* <tbody>  *@
+               @*  @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>()) *@
+               @*  { *@
+               @*      <div> *@
+               @*          <h3>@product.Name</h3> *@
+               @*          <p>@product.Description</p> *@
+               @*          <p>$@product.Price</p> *@
+               @*      </div> *@
+               @*  } *@
+               @* <tr>  *@
+               @*   <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>  *@
+               @*   <td class="text-black">$350.00</td>  *@
+               @* </tr>  *@
+               @* <tr>  *@
+               @*   <td class="text-black font-weight-bold"><strong>Order Total</strong></td>  *@
+               @*   <td class="text-black font-weight-bold"><strong>$350.00</strong></td>  *@
+               @* </tr>  *@
+               @* </tbody>  *@
+               <tbody>
+               @* @foreach (var l in Model.Cart?.Lines ?? Enumerable.Empty<Cart.CartLine>()) *@
+               @* { *@
+               @*   <tr> *@
+               @*     <td>@l.Product.Name <strong class="mx-2">x</strong> @l.Quantity</td> *@
+               @*     <td>@((l.Quantity * l.Product.Price).ToString("c"))</td> *@
+               @*   </tr> *@
+               @* } *@
+               
+               <tr>
+                 <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
+                 @* <td class="text-black">@Model.Cart?.CalculateTotal().ToString("c")</td> *@
+                 <div class="form-group">
+                       <label asp-for="Amount">Amount</label>
+                       <input asp-for="Amount" class="form-control" step="0.01" placeholder="Enter Amount">
+                       </div>
+               </tr>
+               <tr>
+                 <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+                 @* <td class="text-black font-weight-bold"><strong>@Model.Cart?.CalculateTotal().ToString("c")</strong></td> *@
+               </tr>
+               </tbody>
              </table> 
  
              <div class="border p-3 mb-3"> 
@@ -183,7 +210,7 @@
              </div> 
                 
              <div class="form-group"> 
-               <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='thankyou.html'">Place Order</button> 
+               <button class="btn btn-black btn-lg py-3 btn-block" type="submit" value="Submit Order">Place Order</button> 
              </div> 
  
            </div> 
@@ -208,24 +235,25 @@
  
      </div> 
    </div> 
+   </form> 
    <!-- </form> --> 
  </div> 
  </div> 
  @section Scripts{
      <script>
-         function updateDayOfWeek() {
-             // Reset all day of the week values to 0
-             document.getElementsByName("DayOfWeekMon")[0].value = 0;
-             document.getElementsByName("DayOfWeekTue")[0].value = 0;
-             document.getElementsByName("DayOfWeekWed")[0].value = 0;
-             document.getElementsByName("DayOfWeekThu")[0].value = 0;
-             document.getElementsByName("DayOfWeekSat")[0].value = 0;
-             document.getElementsByName("DayOfWeekSun")[0].value = 0;
-             // Get the selected day of the week from the dropdown
-             var selectedDay = document.getElementById("dayOfWeek").value;
-             // Set the corresponding day of the week value to 1
-             document.getElementsByName("DayOfWeek" + selectedDay)[0].value = 1;
-         }
+         // function updateDayOfWeek() {
+         //     // Reset all day of the week values to 0
+         //     document.getElementsByName("DayOfWeekMon")[0].value = 0;
+         //     document.getElementsByName("DayOfWeekTue")[0].value = 0;
+         //     document.getElementsByName("DayOfWeekWed")[0].value = 0;
+         //     document.getElementsByName("DayOfWeekThu")[0].value = 0;
+         //     document.getElementsByName("DayOfWeekSat")[0].value = 0;
+         //     document.getElementsByName("DayOfWeekSun")[0].value = 0;
+         //     // Get the selected day of the week from the dropdown
+         //     var selectedDay = document.getElementById("dayOfWeek").value;
+         //     // Set the corresponding day of the week value to 1
+         //     document.getElementsByName("DayOfWeek" + selectedDay)[0].value = 1;
+         // }
  
          function updateEntryMode() {
              // Reset all entry mode values to 0

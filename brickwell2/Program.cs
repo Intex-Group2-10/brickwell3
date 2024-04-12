@@ -38,7 +38,7 @@ namespace brickwell2
         {
             try
             {
-                return new InferenceSession("/Users/elisegordon/RiderProjects/brickwell3/brickwell2/REALFINAL.onnx");
+                return new InferenceSession("intex_model.onnx");
             }
             catch (Exception ex)
             {

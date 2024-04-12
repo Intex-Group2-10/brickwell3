@@ -5,6 +5,7 @@ using brickwell2.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using System.Drawing.Printing;
+using System.Globalization;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.ML.OnnxRuntime;
@@ -50,11 +51,21 @@ namespace brickwell2.Controllers
         {
             return View();
         }
-        
-        public IActionResult Checkout()
+        [HttpGet]
+        public IActionResult Checkout(string total)
         {
-            return View();
+            // Parse the currency value
+            if (int.TryParse(total, NumberStyles.Currency, CultureInfo.CurrentCulture, out int parsedTotal))
+            {
+                var order = new FraudPrediction
+                {
+                    Amount = parsedTotal
+                };
+                return View(order);
+            }
+            return View(new FraudPrediction()); // fallback if parsing fails
         }
+        
         [HttpGet]
         public IActionResult ProductDetail(int id)
         {
@@ -92,11 +103,11 @@ namespace brickwell2.Controllers
         //     return View("ProductDetail");
         // }
 
-        public IActionResult Test()
-        {
-            var viewUsers = _securityRepository.AspNetUsers.ToList();
-            return View(viewUsers);
-        }
+        // public IActionResult Test()
+        // {
+        //     var viewUsers = _securityRepository.AspNetUsers.ToList();
+        //     return View(viewUsers);
+        // }
 
         //public IActionResult Products(int pageNum, string? productCategory)
         //{
@@ -229,8 +240,7 @@ namespace brickwell2.Controllers
             {
                 var input = new List<float>
                 {
-                    record.Time, record.Amount, record.DayOfWeekMon, record.DayOfWeekSat,
-                    record.DayOfWeekSun, record.DayOfWeekThu, record.DayOfWeekTue, record.DayOfWeekWed, record.EntryModePin,
+                    (float)record.Amount, record.EntryModePin,
                     record.EntryModeTap, record.TypeOfTransactionOnline, record.TypeOfTransactionPos,
                     record.CountryOfTransactionIndia, record.CountryOfTransactionRussia,
                     record.CountryOfTransactionUsa,

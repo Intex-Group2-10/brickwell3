@@ -8,21 +8,21 @@ public partial class FraudPrediction
 {
     [Key]
     public int TransactionID { get; set; }
-    public int Time { get; set; }
+    // public int Time { get; set; }
 
-    public int Amount { get; set; }
+    public double? Amount { get; set; }
 
-    public int DayOfWeekMon { get; set; }
-
-    public int DayOfWeekSat { get; set; }
-
-    public int DayOfWeekSun { get; set; }
-
-    public int DayOfWeekThu { get; set; }
-
-    public int DayOfWeekTue { get; set; }
-
-    public int DayOfWeekWed { get; set; }
+    // public int DayOfWeekMon { get; set; }
+    //
+    // public int DayOfWeekSat { get; set; }
+    //
+    // public int DayOfWeekSun { get; set; }
+    //
+    // public int DayOfWeekThu { get; set; }
+    //
+    // public int DayOfWeekTue { get; set; }
+    //
+    // public int DayOfWeekWed { get; set; }
 
     public int EntryModePin { get; set; }
 
