@@ -1,17 +1,17 @@
 ﻿
-@model IEnumerable<string>
-
+@* @model IQueryable<string> *@
+@* *@
 @* <div class="d-grid gap-2"> *@
 @*     <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Products" asp-route-productCategory="" asp-route-pageNum="">All Products</a> *@
 @* *@
 @*     @foreach(string prod in Model ?? Enumerable.Empty<string>()) *@
 @*     { *@
-@*         <a class=" btn @(prod == ViewBag.SelectProductCategory ? "btn-primary" : "btn-outline-secondary")" asp-controller="Home" asp-action="Products" asp-route-productCategory="@prod" asp-route-pageNum="1">@prod</a> *@
+@*         <a class=" btn @(prod == ViewBag.SelectedProductCategory ? "checked" : "")" asp-controller="Home" asp-action="Products" asp-route-productCategory="@prod" asp-route-pageNum="1">@prod</a> *@
 @*     } *@
 @* </div> *@
 
 <div class="d-grid gap-2">
-    
+
     <label>
         <input type="checkbox" class="category-checkbox" data-category=""/>
         All Products
@@ -20,7 +20,8 @@
     @foreach (string prod in Model ?? Enumerable.Empty<string>())
     {
         <label>
-            <input type="checkbox" class="category-checkbox" data-category="@prod" @(prod == ViewBag.SelectProductCategory ? "checked" : "")/>@prod
+            @* <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index" asp-route-productcategory="@prod" asp-route-pageNum="1">@prod</a> *@
+            <input type="checkbox" class="category-checkbox" data-category="@prod" @(prod == ViewBag.SelectedProductCategory ? "checked" : "")/>@prod
         </label>
     }
 </div>
