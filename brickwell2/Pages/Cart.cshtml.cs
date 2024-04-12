@@ -8,6 +8,7 @@ namespace brickwell2.Pages
     public class CartModel : PageModel
     {
         private ILegoRepository _repo;
+        public FraudPrediction FraudPrediction;
 
         public Cart Cart { get; set; }
 
