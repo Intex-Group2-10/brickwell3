@@ -23,12 +23,11 @@ namespace brickwell2.Controllers
         private readonly LegoDbContext _context;
         private readonly InferenceSession _session;
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp, LegoDbContext context, InferenceSession session, ILogger<HomeController> logger)
+        public HomeController(ILegoRepository temp, ILegoSecurityRepository securetemp, LegoDbContext context, ILogger<HomeController> logger)
         {
             _repo = temp;
             _securityRepository = securetemp;
             _context = context;
-            _session = session;
             _logger = logger;
         }
 
